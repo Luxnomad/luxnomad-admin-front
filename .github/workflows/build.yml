@@ -1,0 +1,33 @@
+name: Check Build
+
+on:
+  pull_request:
+    types: [assigned, unassigned, opened, edited, reopened, synchronize]
+    branches: ['**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up Node
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.x'
+
+        # 3. Check Node Version
+      - name: Check Node Version
+        run: node -v
+
+      # 3. Install Dependencies
+      - name: Install Dpendencies
+        run: yarn install --frozen-lockfile
+
+      # 4. Build
+      - name: Build
+        run: yarn run build

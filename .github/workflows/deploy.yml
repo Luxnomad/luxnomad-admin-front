@@ -1,0 +1,93 @@
+name: Deploy to AWS EC2 with S3
+
+on:
+  push:
+    branches: ['development', 'production']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up Node
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.x'
+
+        # 3. Check Node Version
+      - name: Check Node Version
+        run: node -v
+
+      # 3. Install Dependencies
+      - name: Install Dpendencies
+        run: yarn install --frozen-lockfile
+
+      # 4. Build
+      - name: Build
+        run: yarn run build
+
+      # 5. zip
+      - name: Create zip file
+        run: |
+          mv ./dist ./${GITHUB_REF##*/}
+          zip -qq -r ./${GITHUB_REF##*/}.zip ./${GITHUB_REF##*/}/*
+        shell: bash
+
+      # 4. Upload Build file to AWS S3
+      - name: Upload dist to S3
+        run: |
+          echo "Uploading dist.zip to S3..."
+          aws s3 cp ${GITHUB_REF##*/}.zip s3://${{ secrets.S3_APP_BUCKET }}/${GITHUB_REF##*/}.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_S3_REGION }}
+  deploy_development:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/development'
+    needs: build
+    steps:
+      # 1. Deploy to AWS EC2
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          script: |
+            # Define paths
+            MAIN_DIR="./ubittz-admin-web"
+
+            # Download Build Zip from S3
+            echo "Downloading Build Zip from S3..."
+            sudo aws s3 cp s3://${{ secrets.S3_APP_BUCKET }}/development.zip ./development.zip --region ${{ secrets.AWS_S3_REGION }}
+            echo "Unzip Build File"
+            sudo unzip -o ./development.zip -d $MAIN_DIR/
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+  deploy_production:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+    needs: build
+    steps:
+      # 1. Deploy to AWS EC2
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          script: |
+            # Define paths
+            MAIN_DIR="./ubittz-admin-web"
+
+            # Download Build Zip from S3
+            echo "Downloading Build Zip from S3..."
+            sudo aws s3 cp s3://${{ secrets.S3_APP_BUCKET }}/production.zip ./production.zip --region ${{ secrets.AWS_S3_REGION }}
+            echo "Unzip Build File"
+            sudo unzip -o ./production.zip -d $MAIN_DIR/
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
