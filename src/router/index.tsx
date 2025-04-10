@@ -1,12 +1,9 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-import { PATH } from '@@constants/path';
-import Login from '@@pages/Login';
 import AuthPage from '@@router/AuthPages';
-import { useAppState } from '@@store/hooks';
 
 function Router() {
-  const { token } = useAppState((state) => state.auth);
+  // const { token } = useAppState((state) => state.auth);
 
   return (
     <Routes>

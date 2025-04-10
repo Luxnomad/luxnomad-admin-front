@@ -28,7 +28,7 @@ function Header({ ...props }: HeaderProps) {
   };
 
   const handleClickLogout = async () => {
-    if (confirm('로그아웃 하시겠습니까?')) {
+    if (confirm('Are you sure you want to log out?')) {
       dispatch(logoutRequest());
     }
   };
@@ -37,9 +37,8 @@ function Header({ ...props }: HeaderProps) {
     <StyledHeader {...props} alignItems='center' justifyContent='space-between'>
       <MenuIcon className='header__menu_button' onClick={handleToggleMenu} />
       <Flex.Horizontal gap={10}>
-        {/* <div className='header__personal_info'></div> */}
         <Button onClick={handleClickLogout} size='small'>
-          로그아웃
+          Logout
         </Button>
       </Flex.Horizontal>
     </StyledHeader>

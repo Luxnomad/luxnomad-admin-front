@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
           name: 'App Name',
           short_name: 'App Name',
           theme_color: '#ffffff',
-          description: 'Ubittz MVP Web Template',
+          description: 'Luxnomad Admin',
           icons: [
             {
               src: 'pwa-64x64.png',

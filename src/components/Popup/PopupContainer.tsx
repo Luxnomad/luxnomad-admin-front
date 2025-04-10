@@ -69,13 +69,15 @@ function PopupProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const Icon = popupState?.options.type ? POPUP_TYPE_ICON[popupState.options.type] : null;
+
   return (
     <PopupContext.Provider value={{ showPopup, hidePopup }}>
       {children}
       {popupState && (
         <StyledPopup onClick={handleBackgroundClick}>
           <Flex.Vertical className='popup_box' alignItems='center'>
-            {popupState.options.type && POPUP_TYPE_ICON[popupState.options.type]}
+            {Icon && <Icon />}
             <Typography.Subtitle1 className='popup_box__content'>{popupState.content}</Typography.Subtitle1>
             <Flex.Horizontal gap={12}>
               {popupState.options.buttons?.map((button, index) => (

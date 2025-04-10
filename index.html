@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- For PWA -->
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" sizes="180x180" />
-    <link rel="mask-icon" href="/mask-icon.svg" color="#FFFFFF">
+    <link rel="mask-icon" href="/mask-icon.svg" color="#FFFFFF" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <title>Opulence Admin</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <title>Luxnomad Admin</title>
   </head>
   <body>
     <div id="root"></div>
@@ -22,10 +19,10 @@
         // Register a service worker hosted at the root of the
         navigator.serviceWorker
           .register('/sw.js')
-          .then(registration => {
+          .then((registration) => {
             console.log('Service worker registration succeeded:', registration);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('Service worker registration failed:', err);
           });
       } else {
