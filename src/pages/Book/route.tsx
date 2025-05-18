@@ -1,12 +1,12 @@
 import { PATH } from '@@constants/path';
 import { USER_PERMISSION } from '@@constants/permissions';
-import BookingList from '@@pages/Booking/List';
+import Book from '@@pages/Book';
 import { RouteProps } from '@@router/types';
 
-export const bookingRoute: RouteProps[] = [
+export const bookRoute: RouteProps[] = [
   {
     path: PATH.BOOK_HISTORY,
-    element: <BookingList />,
+    element: <Book />,
     permission: USER_PERMISSION.READ,
   },
 ];

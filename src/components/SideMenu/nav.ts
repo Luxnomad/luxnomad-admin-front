@@ -4,9 +4,15 @@ import { PAGES } from '@@constants/permissions';
 
 export const navs: NavItem[] = [
   {
-    title: 'Booking',
-    path: PATH.BOOKING,
+    title: 'Book',
+    path: PATH.BOOK,
     iconName: 'hotel',
-    page: PAGES.BOOKING,
+    page: PAGES.BOOK,
+  },
+  {
+    title: 'Book History',
+    path: PATH.BOOK_HISTORY,
+    iconName: 'hotel',
+    page: PAGES.BOOK_HISTORY,
   },
 ];

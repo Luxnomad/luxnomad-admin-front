@@ -20,5 +20,6 @@ export const USER_PERMISSION_STRING: Record<UserPermission, string> = {
 
 export const PAGES = {
   LOGIN: 'LOGIN',
-  BOOKING: 'BOOKING',
+  BOOK_HISTORY: 'BOOK_HISTORY',
+  BOOK: 'BOOK',
 } as const;
