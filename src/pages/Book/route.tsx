@@ -5,7 +5,7 @@ import { RouteProps } from '@@router/types';
 
 export const bookRoute: RouteProps[] = [
   {
-    path: PATH.BOOK_HISTORY,
+    path: PATH.BOOK,
     element: <Book />,
     permission: USER_PERMISSION.READ,
   },

@@ -5,14 +5,14 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { DatePickerProps } from '@@components/DatePicker/types';
 
-function DatePicker({ label, value, onChange, format = 'YYYY.MM.DD' }: DatePickerProps) {
+function DatePicker({ label, value, onChange, format = 'MM.DD.YYYY', ...props }: DatePickerProps) {
   const handleChange = (date: Dayjs | null) => {
     onChange(date ? date.toDate() : undefined);
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <MuiDatePicker label={label} value={value ? dayjs(value) : undefined} format={format} onChange={handleChange} />
+      <MuiDatePicker label={label} value={value ? dayjs(value) : undefined} format={format} onChange={handleChange} {...props} />
     </LocalizationProvider>
   );
 }

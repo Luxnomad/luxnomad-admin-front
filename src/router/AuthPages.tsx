@@ -62,7 +62,7 @@ function AuthPage() {
         <div className='content'>
           <Routes>
             {filteredRoutes}
-            <Route path='*' element={<Navigate to={PATH.BOOKING} replace />} />
+            <Route path='*' element={<Navigate to={PATH.BOOK} replace />} />
           </Routes>
         </div>
         {/* ) : (
