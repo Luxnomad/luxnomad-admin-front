@@ -14,3 +14,18 @@ export interface RoomSearchRequest {
   numberOfGuest: number;
   onlyAvailable: boolean;
 }
+
+export interface RoomSearchResponse {
+  hotelName: string;
+  address: string;
+  rooms: Room[];
+}
+
+export interface Room {
+  roomType: string;
+  price: number;
+  description: string[];
+  bookingCode: string;
+  rateKey: string;
+  available: boolean;
+}
