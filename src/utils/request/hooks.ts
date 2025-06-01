@@ -56,18 +56,33 @@ export const useQueryParams = <TQuery extends object>(
     setSearchParams(qs.stringify(newQuery, { arrayFormat: 'comma' }));
   };
 
+  const updateAllQueries = (updates: Partial<TQuery>) => {
+    const newQuery = { ...query };
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === '' || value === null || value === undefined) {
+        delete newQuery[key as keyof TQuery];
+      } else {
+        newQuery[key as keyof TQuery] = value as TQuery[keyof TQuery];
+      }
+    });
+
+    setSearchParams(qs.stringify(newQuery, { arrayFormat: 'comma' }));
+  };
+
   const currentQueryKey = Array.isArray(queryKey) ? [...queryKey, query] : [queryKey, query];
 
   useEffect(() => {
     if (initialSearch?.(query)) {
       const queryString = qs.stringify(initialQuery);
-      setSearchParams(queryString);
+      setSearchParams(queryString, { replace: true });
     }
   }, [query, initialSearch, setSearchParams, initialQuery]);
 
   return {
     query,
     updateQuery,
+    updateAllQueries,
     queryKey: currentQueryKey,
   };
 };

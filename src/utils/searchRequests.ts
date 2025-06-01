@@ -19,5 +19,5 @@ const HOTEL_LIST: HotelSearchResponse[] = [
 
 export const searchHotel = (keyword: string): Promise<HotelSearchResponse[]> =>
   new Promise((res) => {
-    res(HOTEL_LIST.filter(({ name }) => name.includes(keyword)));
+    res(HOTEL_LIST.filter(({ name }) => name.toLowerCase().includes(keyword.toLowerCase())));
   });

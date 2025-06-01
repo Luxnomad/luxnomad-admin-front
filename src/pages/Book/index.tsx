@@ -1,17 +1,16 @@
-import { Formik } from 'formik';
+import styled from 'styled-components';
 
-import BookFormContent from './parts/BookFormContent';
-import { BookForm } from './types';
+import PageTemplate from '@@components/PageTemplate';
 
-const initialValues: BookForm = {};
+import SearchHotelFilterSection from './parts/SearchHotelFilterSection';
+
+const StyledBook = styled(PageTemplate)``;
 
 function Book() {
-  const handleSubmit = () => {};
-
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      <BookFormContent />
-    </Formik>
+    <StyledBook>
+      <SearchHotelFilterSection />
+    </StyledBook>
   );
 }
 

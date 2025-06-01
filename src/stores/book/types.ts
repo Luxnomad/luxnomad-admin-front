@@ -5,3 +5,12 @@ export interface HotelSearchResponse {
   country: string;
   region: string;
 }
+
+export interface RoomSearchRequest {
+  chainCode: string;
+  propertyCode: string;
+  checkInDate: Date;
+  checkOutDate: Date;
+  numberOfGuest: number;
+  onlyAvailable: boolean;
+}
