@@ -1,15 +1,23 @@
-import { MemberListSearchResposne } from '@@stores/member/types';
-import { Platform } from '@@stores/platform/types';
-import { authenticatedRequest } from '@@utils/request';
+import { HotelSearchResponse } from '@@stores/book/types';
 
-export const searchPlatform = (keyword: string): Promise<Platform[]> =>
-  authenticatedRequest
-    .get(`/api/platform/list/search?keyword=${keyword}`)
-    .then((v) => v.data)
-    .catch(() => []);
+const HOTEL_LIST: HotelSearchResponse[] = [
+  {
+    chainCode: 'HH',
+    propertyCode: 'A7691',
+    name: 'Intercontinental Tangshan',
+    country: 'China',
+    region: 'Beijing',
+  },
+  {
+    chainCode: 'HH',
+    propertyCode: 'A7693',
+    name: 'The Shilla Seoul',
+    country: 'South Korea',
+    region: 'Seoul',
+  },
+];
 
-export const searchMember = (keyword?: string, platformId?: string): Promise<MemberListSearchResposne[]> =>
-  authenticatedRequest
-    .get(`/api/member/list/search?keyword=${keyword}&platformId=${platformId}`)
-    .then((v) => v.data)
-    .catch(() => []);
+export const searchHotel = (keyword: string): Promise<HotelSearchResponse[]> =>
+  new Promise((res) => {
+    res(HOTEL_LIST.filter(({ name }) => name.includes(keyword)));
+  });
