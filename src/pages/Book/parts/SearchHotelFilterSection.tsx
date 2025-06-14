@@ -43,6 +43,7 @@ function SearchHotelFilterSection() {
         </Col>
         <Col md={3}>
           <DatePicker
+            className='tw-w-full'
             label='Chack in Date'
             value={searchData.checkInDate}
             onChange={(date) => {
@@ -56,6 +57,7 @@ function SearchHotelFilterSection() {
         </Col>
         <Col md={3}>
           <DatePicker
+            className='tw-w-full'
             label='Chack out Date'
             value={searchData.checkOutDate}
             onChange={(date) => {
@@ -69,6 +71,7 @@ function SearchHotelFilterSection() {
         </Col>
         <Col md={3}>
           <TextField
+            className='tw-w-full'
             label='Number of guests'
             type='number'
             value={searchData.numberOfGuest}

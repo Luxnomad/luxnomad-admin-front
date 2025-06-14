@@ -12,6 +12,8 @@ export const useRoomSearch = () => {
     : {
         hotelName: 'Intercontinental Tangshan',
         address: '',
+        checkInDate: new Date(query.checkInDate),
+        checkOutDate: new Date(query.checkOutDate),
         rooms: [
           {
             roomType: '2 Double Bed(s) Room With City Views',

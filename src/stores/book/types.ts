@@ -18,6 +18,8 @@ export interface RoomSearchRequest {
 export interface RoomSearchResponse {
   hotelName: string;
   address: string;
+  checkInDate: Date;
+  checkOutDate: Date;
   rooms: Room[];
 }
 
