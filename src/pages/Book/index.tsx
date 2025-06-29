@@ -10,8 +10,6 @@ const StyledBook = styled(PageTemplate)``;
 function Book() {
   const { data } = useRoomSearch();
 
-  console.log(data);
-
   return (
     <StyledBook>
       <SearchHotelFilterSection />

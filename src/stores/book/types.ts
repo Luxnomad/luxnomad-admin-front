@@ -7,12 +7,11 @@ export interface HotelSearchResponse {
 }
 
 export interface RoomSearchRequest {
-  chainCode: string;
-  propertyCode: string;
+  keyword: string;
+  adultCount: number;
+  childCount: number;
   checkInDate: Date;
   checkOutDate: Date;
-  numberOfGuest: number;
-  onlyAvailable: boolean;
 }
 
 export interface RoomSearchResponse {

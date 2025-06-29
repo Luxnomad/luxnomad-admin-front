@@ -7,15 +7,18 @@ import { Col, Row } from 'reactstrap';
 import Button from '@@components/Button';
 import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
-import Suggestion from '@@components/Suggestion';
 import { RoomSearchRequest } from '@@stores/book/types';
 import { useQueryParams } from '@@utils/request/hooks';
-import { searchHotel } from '@@utils/searchRequests';
 
-const initialQuery: Partial<RoomSearchRequest> = {};
+const initialQuery: Partial<RoomSearchRequest> = {
+  childCount: 0,
+  adultCount: 1,
+};
 
 function SearchHotelFilterSection() {
-  const { query, updateAllQueries } = useQueryParams(initialQuery);
+  const { query, updateAllQueries } = useQueryParams(initialQuery, {
+    initialSearch: ({ adultCount }) => !adultCount,
+  });
 
   const [searchData, setSearchData] = useState<Partial<RoomSearchRequest>>(query);
 
@@ -30,18 +33,15 @@ function SearchHotelFilterSection() {
   return (
     <Flex.Vertical gap={12}>
       <Row>
-        <Col md={3}>
-          <Suggestion
-            fullWidth
-            fetcher={searchHotel}
-            onChange={(value) => updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode })}
-            getOptionLabel={({ name, region, country }) => `${region} ${country} - ${name}`}
-            textFieldProps={{
-              placeholder: 'Search By Hotel Name',
-            }}
+        <Col md={4}>
+          <TextField
+            className='tw-w-full'
+            label='Keyword'
+            value={searchData.keyword}
+            onChange={(e) => updateSearchData({ keyword: e.target.value })}
           />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <DatePicker
             className='tw-w-full'
             label='Chack in Date'
@@ -55,7 +55,7 @@ function SearchHotelFilterSection() {
             }}
           />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <DatePicker
             className='tw-w-full'
             label='Chack out Date'
@@ -69,13 +69,24 @@ function SearchHotelFilterSection() {
             }}
           />
         </Col>
-        <Col md={3}>
+      </Row>
+      <Row>
+        <Col md={2}>
           <TextField
             className='tw-w-full'
-            label='Number of guests'
+            label='Adult count'
             type='number'
-            value={searchData.numberOfGuest}
-            onChange={(e) => updateSearchData({ numberOfGuest: isNaN(+e.target.value) ? undefined : +e.target.value })}
+            value={searchData.adultCount}
+            onChange={(e) => updateSearchData({ adultCount: isNaN(+e.target.value) ? undefined : +e.target.value })}
+          />
+        </Col>
+        <Col md={2}>
+          <TextField
+            className='tw-w-full'
+            label='Child Count'
+            type='number'
+            value={searchData.childCount}
+            onChange={(e) => updateSearchData({ childCount: isNaN(+e.target.value) ? undefined : +e.target.value })}
           />
         </Col>
       </Row>

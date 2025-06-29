@@ -3,7 +3,7 @@ import { SWRConfiguration } from 'swr';
 
 // eslint-disable-next-line
 export interface SWRListConfig<D, Q = Record<string, any>> {
-  query?: PageQuery & Q;
+  query?: Q;
   config?: SWRConfig<D>;
 }
 
