@@ -7,26 +7,30 @@ export interface HotelSearchResponse {
 }
 
 export interface RoomSearchRequest {
-  keyword: string;
+  chainCode: string;
+  propertyCode: string;
   adultCount: number;
   childCount: number;
-  checkInDate: Date;
-  checkOutDate: Date;
+  checkIn: string;
+  checkOut: string;
 }
 
 export interface RoomSearchResponse {
   hotelName: string;
+  description: string;
+  hotelImages: string[];
   address: string;
-  checkInDate: Date;
-  checkOutDate: Date;
   rooms: Room[];
 }
 
 export interface Room {
   roomType: string;
+  viewType: string;
+  roomImage: string;
+  bedType: string;
+  bedQuantity: number;
   price: number;
-  description: string[];
-  bookingCode: string;
+  currency: string;
+  rateDescription: string;
   rateKey: string;
-  available: boolean;
 }

@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
+import { format } from 'date-fns';
 import { isDayjs } from 'dayjs';
 import { Col, Row } from 'reactstrap';
 
 import Button from '@@components/Button';
 import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
+// import Suggestion from '@@components/Suggestion';
 import { RoomSearchRequest } from '@@stores/book/types';
 import { useQueryParams } from '@@utils/request/hooks';
+// import { searchHotel } from '@@utils/searchRequests';
 
 const initialQuery: Partial<RoomSearchRequest> = {
   childCount: 0,
   adultCount: 1,
+  chainCode: 'MC',
+  propertyCode: '34266',
 };
 
 function SearchHotelFilterSection() {
@@ -30,27 +35,34 @@ function SearchHotelFilterSection() {
     updateAllQueries(searchData);
   };
 
+  useEffect(() => {
+    updateSearchData(query);
+  }, [query]);
+
   return (
     <Flex.Vertical gap={12}>
       <Row>
         <Col md={4}>
-          <TextField
-            className='tw-w-full'
-            label='Keyword'
-            value={searchData.keyword}
-            onChange={(e) => updateSearchData({ keyword: e.target.value })}
-          />
+          {/* <Suggestion
+            fullWidth
+            fetcher={searchHotel}
+            // onChange={(value) => updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode })}
+            getOptionLabel={({ name, region, country }) => `${region} ${country} - ${name}`}
+            textFieldProps={{
+              placeholder: 'Search By Hotel Name',
+            }}
+          /> */}
         </Col>
         <Col md={4}>
           <DatePicker
             className='tw-w-full'
             label='Chack in Date'
-            value={searchData.checkInDate}
+            value={searchData.checkIn}
             onChange={(date) => {
               if (isDayjs(date)) {
-                updateSearchData({ checkInDate: date.toDate() });
+                updateSearchData({ checkIn: date.format('YYYY-MM-DD') });
               } else {
-                updateSearchData({ checkInDate: date ?? undefined });
+                updateSearchData({ checkIn: date ? format(date, 'yyyy-MM-dd') : undefined });
               }
             }}
           />
@@ -59,12 +71,12 @@ function SearchHotelFilterSection() {
           <DatePicker
             className='tw-w-full'
             label='Chack out Date'
-            value={searchData.checkOutDate}
+            value={searchData.checkOut}
             onChange={(date) => {
               if (isDayjs(date)) {
-                updateSearchData({ checkOutDate: date.toDate() });
+                updateSearchData({ checkOut: date.format('YYYY-MM-DD') });
               } else {
-                updateSearchData({ checkOutDate: date ?? undefined });
+                updateSearchData({ checkOut: date ? format(date, 'yyyy-MM-dd') : undefined });
               }
             }}
           />

@@ -1,17 +1,15 @@
 import useSearch from '@@hooks/useSearch';
 import { RoomSearchRequest, RoomSearchResponse } from '@@stores/book/types';
-import { useSWRList } from '@@utils/request/hooks';
+import { useSWRDetail } from '@@utils/request/hooks';
 
 export const useRoomSearch = () => {
   const query = useSearch<RoomSearchRequest>();
 
-  const skip = !query.adultCount || !query.keyword || !query.checkInDate || !query.checkOutDate;
+  const skip = !query.adultCount || !query.chainCode || !query.propertyCode || !query.checkIn || !query.checkOut;
 
-  const { data } = useSWRList<RoomSearchResponse[]>(`/admin/hotel/search`, {
+  const { data } = useSWRDetail<RoomSearchResponse>(`/admin/hotel/search`, {
     query,
-    config: {
-      skip,
-    },
+    skip,
   });
 
   return { data };

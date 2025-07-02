@@ -41,6 +41,7 @@ function App() {
                   revalidateOnReconnect: false,
                   refreshWhenOffline: false,
                   refreshWhenHidden: false,
+                  errorRetryCount: 2,
                   shouldRetryOnError(err) {
                     return err.status !== 404;
                   },

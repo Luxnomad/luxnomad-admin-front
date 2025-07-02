@@ -2,12 +2,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { SWRConfiguration } from 'swr';
 
 // eslint-disable-next-line
-export interface SWRListConfig<D, Q = Record<string, any>> {
+export type SWRConfig<D, Q = Record<string, any>> = SWRConfiguration<UbittzResponse<D>> & {
   query?: Q;
-  config?: SWRConfig<D>;
-}
-
-export type SWRConfig<D> = SWRConfiguration<UbittzResponse<D>> & {
   skip?: boolean;
 };
 
