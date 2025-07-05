@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
 import { format } from 'date-fns';
-import { isDayjs } from 'dayjs';
+import dayjs, { isDayjs } from 'dayjs';
 import { Col, Row } from 'reactstrap';
 
 import Button from '@@components/Button';
@@ -58,6 +58,8 @@ function SearchHotelFilterSection() {
             className='tw-w-full'
             label='Chack in Date'
             value={searchData.checkIn}
+            minDate={dayjs()}
+            maxDate={searchData.checkOut ? dayjs(searchData.checkOut).add(-1, 'day') : undefined}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkIn: date.format('YYYY-MM-DD') });
@@ -72,6 +74,7 @@ function SearchHotelFilterSection() {
             className='tw-w-full'
             label='Chack out Date'
             value={searchData.checkOut}
+            minDate={searchData.checkIn ? dayjs(searchData.checkIn).add(1, 'day') : undefined}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkOut: date.format('YYYY-MM-DD') });
