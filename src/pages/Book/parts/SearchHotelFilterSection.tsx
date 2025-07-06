@@ -8,16 +8,14 @@ import { Col, Row } from 'reactstrap';
 import Button from '@@components/Button';
 import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
-// import Suggestion from '@@components/Suggestion';
+import Suggestion from '@@components/Suggestion';
 import { RoomSearchRequest } from '@@stores/book/types';
 import { useQueryParams } from '@@utils/request/hooks';
-// import { searchHotel } from '@@utils/searchRequests';
+import { searchHotel } from '@@utils/searchRequests';
 
 const initialQuery: Partial<RoomSearchRequest> = {
   childCount: 0,
   adultCount: 1,
-  chainCode: 'MC',
-  propertyCode: '34266',
 };
 
 function SearchHotelFilterSection() {
@@ -43,15 +41,15 @@ function SearchHotelFilterSection() {
     <Flex.Vertical gap={12}>
       <Row>
         <Col md={4}>
-          {/* <Suggestion
+          <Suggestion
             fullWidth
             fetcher={searchHotel}
-            // onChange={(value) => updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode })}
+            onChange={(value) => updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode })}
             getOptionLabel={({ name, region, country }) => `${region} ${country} - ${name}`}
             textFieldProps={{
               placeholder: 'Search By Hotel Name',
             }}
-          /> */}
+          />
         </Col>
         <Col md={4}>
           <DatePicker
@@ -106,7 +104,7 @@ function SearchHotelFilterSection() {
         </Col>
       </Row>
       <Flex.Horizontal justifyContent='center'>
-        <Button onClick={handleSubmit}>검색</Button>
+        <Button onClick={handleSubmit}>Search</Button>
       </Flex.Horizontal>
     </Flex.Vertical>
   );
