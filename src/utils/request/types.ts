@@ -2,17 +2,23 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { SWRConfiguration } from 'swr';
 
 // eslint-disable-next-line
-export type SWRConfig<D, Q = Record<string, any>> = SWRConfiguration<UbittzResponse<D>> & {
+export type SWRConfig<D, Q = Record<string, any>> = SWRConfiguration<LuxnomadResponse<D>> & {
   query?: Q;
   skip?: boolean;
 };
 
-export interface UbittzResponse<Data> extends AxiosResponse<Data> {
+export interface LuxnomadResponse<Data> extends Omit<AxiosResponse<Data>, 'data'> {
+  data: LuxnomadData<Data>;
   ok: boolean;
 }
 
-export interface UbittzErrorResponse extends AxiosError {
+export interface LuxnomadErrorResponse extends AxiosError {
   ok: boolean;
+}
+
+export interface LuxnomadData<Data> {
+  message: string;
+  body: Data;
 }
 
 export interface PageQuery {
@@ -20,7 +26,7 @@ export interface PageQuery {
   pageNo: number;
 }
 
-export interface UbittzPageResponse<Data> {
+export interface LuxnomadPageResponse<Data> {
   empty: boolean;
   first: boolean;
   last: boolean;

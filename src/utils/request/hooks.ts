@@ -5,14 +5,14 @@ import { useSearchParams } from 'react-router-dom';
 import useSWR from 'swr';
 
 import useSearch from '@@hooks/useSearch';
-import { SWRConfig, UbittzResponse, UseQueryParamsConfig } from '@@utils/request/types';
+import { SWRConfig, LuxnomadResponse, UseQueryParamsConfig } from '@@utils/request/types';
 
 // eslint-disable-next-line
 export const useSWRList = <D = any, Q extends Record<string, any> = Record<string, any>>(path: string, config?: SWRConfig<D, Q>) => {
-  const prevResponse = useRef<UbittzResponse<D>>();
+  const prevResponse = useRef<LuxnomadResponse<D>>();
 
   const { query, ...swrConfig } = config ?? {};
-  const response = useSWR<UbittzResponse<D>>(swrConfig?.skip ? null : `${path}?${qs.stringify(query)}`, swrConfig ?? {});
+  const response = useSWR<LuxnomadResponse<D>>(swrConfig?.skip ? null : `${path}?${qs.stringify(query)}`, swrConfig ?? {});
 
   if (!response.data && !response.error) {
     return { ...response, data: prevResponse.current };
@@ -27,7 +27,7 @@ export const useSWRList = <D = any, Q extends Record<string, any> = Record<strin
 export const useSWRDetail = <D, Q extends Record<string, any> = Record<string, any>>(path: string, config?: SWRConfig<D, Q>) => {
   const { query, ...swrConfig } = config ?? {};
 
-  const response = useSWR<UbittzResponse<D>>(swrConfig?.skip ? null : `${path}?${qs.stringify(query)}`, swrConfig);
+  const response = useSWR<LuxnomadResponse<D>>(swrConfig?.skip ? null : `${path}?${qs.stringify(query)}`, swrConfig);
   return response;
 };
 

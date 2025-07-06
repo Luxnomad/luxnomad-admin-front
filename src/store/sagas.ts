@@ -1,8 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 
-import adminSaga from '@@stores/admin/saga';
-import authSaga from '@@stores/auth/saga';
+import bookSaga from '@@stores/book/saga';
 
 export function* rootSagas() {
-  yield all([authSaga, adminSaga].map((saga) => fork(saga)));
+  yield all([bookSaga].map((saga) => fork(saga)));
 }

@@ -12,5 +12,5 @@ export const useRoomSearch = () => {
     skip,
   });
 
-  return { data: data?.data };
+  return { data: data?.data.body };
 };

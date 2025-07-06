@@ -4,7 +4,7 @@ import { dispatch } from '@@store';
 import { logoutRequest } from '@@stores/auth/reducer';
 import { getAccessToken } from '@@utils/localStorage';
 import { API_ENDPOINT } from '@@utils/request/constants';
-import { UbittzErrorResponse, UbittzResponse } from '@@utils/request/types';
+import { LuxnomadErrorResponse, LuxnomadResponse } from '@@utils/request/types';
 
 axios.defaults.baseURL = API_ENDPOINT;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -13,16 +13,18 @@ const responseInterceptor = (axiosRes: AxiosResponse) => {
   const ok = Math.floor(axiosRes.status / 100) < 4;
 
   // eslint-disable-next-line
-  const response: UbittzResponse<any> = {
+  const response: LuxnomadResponse<any> = {
     ...axiosRes,
     ok,
   };
+
+  console.log(response);
 
   return response;
 };
 
 const errorInterceptor = async (axiosError: AxiosError) => {
-  const error: UbittzErrorResponse = {
+  const error: LuxnomadErrorResponse = {
     ...axiosError,
     ok: false,
   };
@@ -40,7 +42,7 @@ const generatorRequest = () => {
   const generator =
     (method: Method) =>
     // eslint-disable-next-line
-    async <Data = any>(path: string, config?: AxiosRequestConfig): Promise<UbittzResponse<Data>> => {
+    async <Data = any>(path: string, config?: AxiosRequestConfig): Promise<LuxnomadResponse<Data>> => {
       const accessToken = getAccessToken();
 
       const newConfig: AxiosRequestConfig = {

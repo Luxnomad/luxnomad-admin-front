@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Button from '@@components/Button';
 import Flex from '@@components/Flex';
 import Typography from '@@components/Typography';
+import { PATH } from '@@constants/path';
 import { Room } from '@@stores/book/types';
 
 const StyledRoomInfoItem = styled(Flex.Horizontal)`
@@ -19,18 +22,31 @@ const StyledRoomInfoItem = styled(Flex.Horizontal)`
 `;
 
 function RoomInfoItem({ room }: { room: Room }) {
+  const navigate = useNavigate();
+
+  const handleClickBook = () => {
+    navigate(`${PATH.BOOK}/reservation`, {
+      state: { room },
+    });
+  };
+
   return (
     <StyledRoomInfoItem>
       <img className='room__image' src={room.roomImage} />
-      <Flex.Vertical className='room__info'>
-        <Typography.Subtitle1>{room.roomType}</Typography.Subtitle1>
-        <Typography.Body3>
-          <span>Bed Type: {room.bedType}</span>
-          <span className='tw-ml-[8px]'>Bed Count: {room.bedQuantity}</span>
-        </Typography.Body3>
-        <Typography.Body3>
-          {room.price.toLocaleString()} {room.currency}
-        </Typography.Body3>
+      <Flex.Vertical className='tw-flex-shrink-0'>
+        <Flex.Vertical className='room__info'>
+          <Typography.Subtitle1>{room.roomType}</Typography.Subtitle1>
+          <Typography.Body3>
+            <span>Bed Type: {room.bedType}</span>
+            <span className='tw-ml-[8px]'>Bed Count: {room.bedQuantity}</span>
+          </Typography.Body3>
+          <Typography.Body3>
+            {room.price.toLocaleString()} {room.currency}
+          </Typography.Body3>
+        </Flex.Vertical>
+        <Button className='tw-self-start' size='small' onClick={handleClickBook}>
+          Show Rules And Book
+        </Button>
       </Flex.Vertical>
     </StyledRoomInfoItem>
   );
