@@ -10,7 +10,7 @@ function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>
   try {
     const response: LuxnomadResponse<HotelRulesResponse> = yield authenticatedRequest.get('/admin/hotel/rule', {
       headers: {
-        'offer-identifier': payload,
+        'Offer-Identifier': payload,
       },
     });
 

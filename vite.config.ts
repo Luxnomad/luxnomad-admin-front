@@ -10,9 +10,9 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tsconfigPaths()],
     server: {
       port: 3000,
-      proxy: {
-        '/admin': env.VITE_APP_API_ENDPOINT,
-      },
+      // proxy: {
+      //   '/admin': env.VITE_APP_API_ENDPOINT,
+      // },
     },
   };
 });
