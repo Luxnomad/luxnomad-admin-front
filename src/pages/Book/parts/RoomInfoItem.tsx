@@ -5,7 +5,8 @@ import Button from '@@components/Button';
 import Flex from '@@components/Flex';
 import Typography from '@@components/Typography';
 import { PATH } from '@@constants/path';
-import { Room } from '@@stores/book/types';
+import useSearch from '@@hooks/useSearch';
+import { Room, RoomSearchRequest } from '@@stores/book/types';
 
 const StyledRoomInfoItem = styled(Flex.Horizontal)`
   gap: 12px;
@@ -22,11 +23,12 @@ const StyledRoomInfoItem = styled(Flex.Horizontal)`
 `;
 
 function RoomInfoItem({ room }: { room: Room }) {
+  const query = useSearch<RoomSearchRequest>();
   const navigate = useNavigate();
 
   const handleClickBook = () => {
     navigate(`${PATH.BOOK}/reservation`, {
-      state: { room },
+      state: { room, searchInfo: query },
     });
   };
 

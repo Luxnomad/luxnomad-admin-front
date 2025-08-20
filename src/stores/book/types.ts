@@ -73,3 +73,68 @@ export interface HotelPenalty {
 export interface AcceptedCreditCard {
   value: string;
 }
+
+export interface ReservationRequest {
+  hotelInfo: HotelInfoRequest;
+  priceInfo?: PriceInfoRequest;
+  paymentCardInfo: PaymentCardInfoRequest;
+  travelerInfo: TravelerInfoRequest;
+  addressInfo: AddressInfoRequest;
+}
+
+export interface HotelInfoRequest {
+  bookingCode: string;
+  roomQuantity: number; // Java long → number
+  guests: number; // Java int → number
+  hotelPropertyCode: string;
+  hotelChainCode: string;
+  checkin: string; // Java LocalDate → string (ISO-8601)
+  checkout: string; // Java LocalDate → string (ISO-8601)
+}
+
+export interface PriceInfoRequest {
+  priceCurrencyCode: string;
+  totalPrice: number; // Java double → number
+  paymentCurrencyCode: string;
+  paymentAmount: number; // Java double → number
+  rateCodeValue: string;
+  rateCodeName: string;
+  rateCodeId: string;
+}
+
+export interface PaymentCardInfoRequest {
+  cardExpireDate: string;
+  cardType: string;
+  cardCode: string;
+  cardHolderName: string;
+  cardNumber: string;
+  cardSeriesCode: string;
+  cardTelephoneCountryAccessCode: string;
+  cardTelephoneAreaCityCode: string;
+  cardTelephoneCityCode: string;
+}
+
+export interface TravelerInfoRequest {
+  travelerFirstName: string;
+  travelerLastName: string;
+  travelerPhoneNumber: string;
+  travelerEmail: string;
+  travelerCountryAccessCode: string;
+  travelerLocalCityCode: string;
+  travelerCityCode: string;
+}
+
+export interface AddressInfoRequest {
+  addressNumberValue: string;
+  addressStreet: string;
+  addressLine: string;
+  addressCity: string;
+  addressCounty: string;
+  addressStateProvValue: string;
+  addressStateProvName: string;
+  addressCountryValue: string;
+  addressCountryId: string;
+  addressCountryName: string;
+  addressCountryCodeContext: string;
+  addressPostalCode: string;
+}

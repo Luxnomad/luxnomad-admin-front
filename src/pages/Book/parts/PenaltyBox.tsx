@@ -8,8 +8,9 @@ import { CancelPenalty } from '@@stores/book/types';
 
 const StyledPenaltyBox = styled(Flex.Vertical)`
   padding: 12px;
-  &:not(:last-child) {
-    border-bottom: 1px solid ${COLORS.GRAY_SCALE_20};
+  border-bottom: 1px solid ${COLORS.GRAY_SCALE_20};
+  &:first-of-type {
+    border-top: 1px solid ${COLORS.GRAY_SCALE_20};
   }
 `;
 

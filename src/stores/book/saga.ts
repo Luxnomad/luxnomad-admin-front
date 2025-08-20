@@ -3,7 +3,14 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { authenticatedRequest } from '@@utils/request';
 import { LuxnomadResponse } from '@@utils/request/types';
 
-import { fetchHotelRulesFailure, fetchHotelRulesRequest, fetchHotelRulesSuccess } from './reducer';
+import {
+  fetchHotelRulesFailure,
+  fetchHotelRulesRequest,
+  fetchHotelRulesSuccess,
+  confirmReservationRequest,
+  confirmReservationSuccess,
+  confirmReservationFailure,
+} from './reducer';
 import { HotelRulesResponse } from './types';
 
 function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>) {
@@ -24,6 +31,23 @@ function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>
   }
 }
 
+function* confirmReservation({ payload }: ReturnType<typeof confirmReservationRequest>) {
+  try {
+    const response: LuxnomadResponse<HotelRulesResponse> = yield authenticatedRequest.post('/admin/hotel/reservation', {
+      data: payload,
+    });
+
+    if (response.ok) {
+      yield put(confirmReservationSuccess());
+    } else {
+      yield put(confirmReservationFailure('Failed to reservation'));
+    }
+  } catch (e) {
+    yield put(confirmReservationFailure((e as Error).message));
+  }
+}
+
 export default function* defaultSaga() {
   yield takeLatest(fetchHotelRulesRequest.type, fetchHotelRules);
+  yield takeLatest(confirmReservationRequest.type, confirmReservation);
 }
