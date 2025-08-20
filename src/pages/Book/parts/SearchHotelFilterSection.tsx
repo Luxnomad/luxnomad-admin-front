@@ -16,8 +16,6 @@ import { searchHotel } from '@@utils/searchRequests';
 const initialQuery: Partial<RoomSearchRequest> = {
   childCount: 0,
   adultCount: 1,
-  chainCode: 'MC',
-  propertyCode: '34266',
 };
 
 function SearchHotelFilterSection() {
