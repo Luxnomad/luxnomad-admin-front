@@ -62,7 +62,7 @@ export interface CancelPenalty {
 
 export interface Deadline {
   start: Date;
-  end: Date;
+  end?: Date;
 }
 
 export interface HotelPenalty {

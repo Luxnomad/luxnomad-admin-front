@@ -6,6 +6,8 @@ import PageTemplate from '@@components/PageTemplate';
 import Typography from '@@components/Typography';
 import { HotelRulesResponse, Room } from '@@stores/book/types';
 
+import PenaltyBox from './PenaltyBox';
+
 const StyledReservationFormContent = styled(PageTemplate)``;
 
 const Section = styled(Flex.Vertical)`
@@ -60,6 +62,9 @@ function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRules
       </Section>
       <Section>
         <h1 className='title'>Penalties</h1>
+        {rules.cancelPenalty.map((penalty, index) => (
+          <PenaltyBox penalty={penalty} key={index} />
+        ))}
       </Section>
     </StyledReservationFormContent>
   );
