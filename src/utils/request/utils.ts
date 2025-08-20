@@ -1,8 +1,6 @@
 import { AxiosError } from 'axios';
-import { SWRResponse } from 'swr';
 
 import { authenticatedRequest } from '@@utils/request';
-import { UbittzPageResponse, UbittzResponse } from '@@utils/request/types';
 
 export const fetcher = async (url: string) => {
   const res = await authenticatedRequest.get(url);
@@ -47,23 +45,6 @@ export const base64Decoder = (str: string) => {
   } catch {
     return str;
   }
-};
-
-export const formatSWRListResponse = <Data>(response: SWRResponse<UbittzResponse<UbittzPageResponse<Data>>>) => {
-  const { data: swrData, ...swrResponse } = response;
-
-  const { content, totalElements, number, size, totalPages } = swrData?.data ?? {};
-
-  return {
-    ...swrResponse,
-    content,
-    page: {
-      total: totalElements ?? 0,
-      current: number ?? 0,
-      lastPage: totalPages ?? 0,
-      limit: size ?? 0,
-    },
-  } as const;
 };
 
 export const createBlobJSON = (jsonString: string) =>
