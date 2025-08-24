@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+import qs from 'qs';
 import { put, takeLatest } from 'redux-saga/effects';
 
 import { authenticatedRequest } from '@@utils/request';
@@ -10,8 +12,27 @@ import {
   confirmReservationRequest,
   confirmReservationSuccess,
   confirmReservationFailure,
+  searchRoomRequest,
+  searchRoomSuccess,
+  searchRoomFailure,
 } from './reducer';
-import { HotelRulesResponse } from './types';
+import { HotelRulesResponse, RoomSearchResponse } from './types';
+
+function* searchRoom({ payload }: ReturnType<typeof searchRoomRequest>) {
+  try {
+    const query = qs.stringify(payload);
+    const response: LuxnomadResponse<RoomSearchResponse> = yield authenticatedRequest.get(`/admin/hotel/search?${query}`);
+
+    if (response.ok) {
+      yield put(searchRoomSuccess(response.data.body));
+    } else {
+      // @ts-ignore
+      yield put(searchRoomFailure((response as AxiosError).response?.data.message));
+    }
+  } catch (e) {
+    yield put(searchRoomFailure((e as Error).message));
+  }
+}
 
 function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>) {
   try {
@@ -48,6 +69,7 @@ function* confirmReservation({ payload }: ReturnType<typeof confirmReservationRe
 }
 
 export default function* defaultSaga() {
+  yield takeLatest(searchRoomRequest.type, searchRoom);
   yield takeLatest(fetchHotelRulesRequest.type, fetchHotelRules);
   yield takeLatest(confirmReservationRequest.type, confirmReservation);
 }

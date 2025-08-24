@@ -1,12 +1,12 @@
 import Flex from '@@components/Flex';
 import Typography from '@@components/Typography';
+import { useAppState } from '@@store/hooks';
 
-import { useRoomSearch } from '../hooks';
 import HotelImageSlider from './HotelImageSlider';
 import RoomInfoItem from './RoomInfoItem';
 
 function SearchedHotelInfoSection() {
-  const { data } = useRoomSearch();
+  const data = useAppState((state) => state.book.roomResponse);
 
   if (!data) {
     return null;

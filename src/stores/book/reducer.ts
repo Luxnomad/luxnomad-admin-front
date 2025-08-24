@@ -1,8 +1,13 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { HotelRulesResponse, ReservationRequest } from './types';
+import { BookState, HotelRulesResponse, ReservationRequest, RoomSearchRequest, RoomSearchResponse } from './types';
 
 const name = 'book';
+
+const initialState: BookState = {};
+
+export const searchRoomRequest = createAction<RoomSearchRequest>(`${name}/searchRoomRequest`);
+export const searchRoomFailure = createAction<string>(`${name}/searchRoomFailure`);
 
 export const fetchHotelRulesRequest = createAction<string>(`${name}/fetchHotelRulesRequest`);
 export const fetchHotelRulesSuccess = createAction<HotelRulesResponse>(`${name}/fetchHotelRulesSuccess`);
@@ -11,3 +16,17 @@ export const fetchHotelRulesFailure = createAction<string>(`${name}/fetchHotelRu
 export const confirmReservationRequest = createAction<ReservationRequest>(`${name}/confirmReservationRequest`);
 export const confirmReservationSuccess = createAction(`${name}/confirmReservationSuccess`);
 export const confirmReservationFailure = createAction<string>(`${name}/confirmReservationFailure`);
+
+const bookSlice = createSlice({
+  name,
+  initialState,
+  reducers: {
+    searchRoomSuccess(state, { payload }: PayloadAction<RoomSearchResponse>) {
+      state.roomResponse = payload;
+    },
+  },
+});
+
+export const { searchRoomSuccess } = bookSlice.actions;
+
+export default bookSlice.reducer;

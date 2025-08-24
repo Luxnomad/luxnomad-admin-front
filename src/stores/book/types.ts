@@ -1,3 +1,7 @@
+export interface BookState {
+  roomResponse?: RoomSearchResponse;
+}
+
 export interface HotelSearchResponse {
   chainCode: string;
   propertyCode: string;

@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-
 import { TextField } from '@mui/material';
 import { format } from 'date-fns';
 import dayjs, { isDayjs } from 'dayjs';
+import { useDispatch } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 
 import Button from '@@components/Button';
 import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
 import Suggestion from '@@components/Suggestion';
+import { showErrorToast } from '@@components/Toast';
+import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
+import { searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
 import { RoomSearchRequest } from '@@stores/book/types';
 import { useQueryParams } from '@@utils/request/hooks';
 import { searchHotel } from '@@utils/searchRequests';
@@ -19,23 +21,28 @@ const initialQuery: Partial<RoomSearchRequest> = {
 };
 
 function SearchHotelFilterSection() {
+  const dispatch = useDispatch();
+
   const { query, updateAllQueries } = useQueryParams(initialQuery, {
     initialSearch: ({ adultCount }) => !adultCount,
   });
 
-  const [searchData, setSearchData] = useState<Partial<RoomSearchRequest>>(query);
-
   const updateSearchData = (data: Partial<RoomSearchRequest>) => {
-    setSearchData((prev) => ({ ...prev, ...data }));
+    updateAllQueries({ ...query, ...data });
   };
 
   const handleSubmit = () => {
-    updateAllQueries(searchData);
+    if (query.chainCode && query.propertyCode && query.checkIn && query.checkOut) {
+      dispatch(searchRoomRequest(query as RoomSearchRequest));
+    }
   };
 
-  useEffect(() => {
-    updateSearchData(query);
-  }, [query]);
+  useActionSubscribe({
+    type: searchRoomFailure.type,
+    callback: ({ payload }: ReturnType<typeof searchRoomFailure>) => {
+      showErrorToast(payload);
+    },
+  });
 
   return (
     <Flex.Vertical gap={12}>
@@ -55,9 +62,9 @@ function SearchHotelFilterSection() {
           <DatePicker
             className='tw-w-full'
             label='Chack in Date'
-            value={searchData.checkIn}
+            value={query.checkIn}
             minDate={dayjs()}
-            maxDate={searchData.checkOut ? dayjs(searchData.checkOut).add(-1, 'day') : undefined}
+            maxDate={query.checkOut ? dayjs(query.checkOut).add(-1, 'day') : undefined}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkIn: date.format('YYYY-MM-DD') });
@@ -71,8 +78,8 @@ function SearchHotelFilterSection() {
           <DatePicker
             className='tw-w-full'
             label='Chack out Date'
-            value={searchData.checkOut}
-            minDate={searchData.checkIn ? dayjs(searchData.checkIn).add(1, 'day') : undefined}
+            value={query.checkOut}
+            minDate={query.checkIn ? dayjs(query.checkIn).add(1, 'day') : undefined}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkOut: date.format('YYYY-MM-DD') });
@@ -89,7 +96,7 @@ function SearchHotelFilterSection() {
             className='tw-w-full'
             label='Adult count'
             type='number'
-            value={searchData.adultCount}
+            value={query.adultCount}
             onChange={(e) => updateSearchData({ adultCount: isNaN(+e.target.value) ? undefined : +e.target.value })}
           />
         </Col>
@@ -98,7 +105,7 @@ function SearchHotelFilterSection() {
             className='tw-w-full'
             label='Child Count'
             type='number'
-            value={searchData.childCount}
+            value={query.childCount}
             onChange={(e) => updateSearchData({ childCount: isNaN(+e.target.value) ? undefined : +e.target.value })}
           />
         </Col>
