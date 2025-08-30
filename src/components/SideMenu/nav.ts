@@ -9,4 +9,10 @@ export const navs: NavItem[] = [
     iconName: 'hotel',
     page: PAGES.BOOK,
   },
+  {
+    title: 'Book History',
+    path: PATH.BOOK_HISTORY,
+    iconName: 'history',
+    page: PAGES.BOOK_HISTORY,
+  },
 ];
