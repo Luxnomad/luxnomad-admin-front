@@ -6,7 +6,9 @@ import styled from 'styled-components';
 import Button from '@@components/Button';
 import Flex from '@@components/Flex';
 import TextField from '@@components/TextField'; // 사용자 정의 Input
-import { ReservationRequest } from '@@stores/book/types';
+import Typography from '@@components/Typography';
+import { CREDIT_CARD_STRING } from '@@stores/book/constants';
+import { HotelRulesResponse, ReservationRequest } from '@@stores/book/types';
 
 const Section = styled(Flex.Vertical)`
   gap: 12px;
@@ -16,13 +18,23 @@ const Section = styled(Flex.Vertical)`
   }
 `;
 
-function ReservationConfirmSection() {
+function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
   const { getFieldProps } = useFormikContext<ReservationRequest>();
+
+  const cardList = Array.from(new Set(rules.acceptedCreditCard.map((v) => v.value))).map((v) => CREDIT_CARD_STRING[v] ?? v);
 
   return (
     <>
       <Section>
         <h1 className='title'>Payment Info</h1>
+        <Row>
+          <Col md={3}>
+            <Typography.Body2>Accepted Credit Card</Typography.Body2>
+          </Col>
+          <Col md={9}>
+            <Typography.Body2>{cardList.join(', ')}</Typography.Body2>
+          </Col>
+        </Row>
         <Row>
           <Col md={6}>
             <InputMask

@@ -83,7 +83,7 @@ function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRules
             <PenaltyBox penalty={penalty} key={index} />
           ))}
         </Section>
-        <ReservationConfirmSection />
+        <ReservationConfirmSection rules={rules} />
       </StyledReservationFormContent>
     </Form>
   );

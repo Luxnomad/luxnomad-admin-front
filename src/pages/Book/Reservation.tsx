@@ -114,6 +114,15 @@ function Reservation() {
       addressCountryCodeContext: '',
       addressPostalCode: '',
     },
+    priceInfo: {
+      priceCurrencyCode: rules.currency,
+      totalPrice: rules.price,
+      paymentCurrencyCode: rules.currency,
+      paymentAmount: rules.price,
+      rateCodeValue: 'rateCodeValue',
+      rateCodeName: 'rateCodeName',
+      rateCodeId: 'rateCodeId',
+    },
   };
 
   return (
