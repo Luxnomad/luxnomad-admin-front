@@ -56,7 +56,7 @@ function EditableDetail<Data extends object>({ title, data, options, isEdit = fa
         {options.map((option) => (
           <StyledRow key={option.name as string}>
             <div>{option.title ?? (option.name as string)}</div>
-            <div>{getContent(option)}</div>
+            <div>{getContent(option) as ReactNode}</div>
           </StyledRow>
         ))}
       </StyledContent>
