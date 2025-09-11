@@ -1,42 +1,32 @@
-import { ReactNode } from 'react';
+import { Key } from 'react';
 
 import styled from 'styled-components';
 
+import DetailRow from '@@components/Detail/parts/DetailRow';
 import { DetailProps } from '@@components/Detail/types';
 import Flex from '@@components/Flex';
-import Typography from '@@components/Typography';
+import Title from '@@components/Title';
+import { COLORS } from '@@constants/colors';
 
-const StyledRow = styled(Flex.Horizontal)`
+const StyledDetailBox = styled(Flex.Horizontal)`
   flex-wrap: wrap;
-  overflow: hidden;
-
-  & > div:first-child {
-    flex: 1;
-  }
-
-  & > div:last-child {
-    flex: 2;
-    overflow: hidden;
-    word-wrap: break-word;
-  }
+  border-right: 1px solid ${COLORS.GRAY_SCALE_10};
+  border-bottom: 1px solid ${COLORS.GRAY_SCALE_10};
 `;
 
-function Detail<Data extends object>({ title, data, options }: DetailProps<Data>) {
+function Detail<Data extends object>({ title, data, options, headerContent }: DetailProps<Data>) {
   return (
-    <Flex.Vertical gap={16}>
-      <Typography.Subtitle1>{title}</Typography.Subtitle1>
-      <Flex.Vertical gap={20}>
-        {options.map(({ name, title, renderContent }) => {
-          const renderedContent = typeof renderContent === 'function' ? renderContent(data) : renderContent;
-
-          return (
-            <StyledRow key={name as string}>
-              <div>{title ?? (name as string)}</div>
-              <div>{renderedContent ?? ((data[name as keyof Data] as ReactNode) || '-')}</div>
-            </StyledRow>
-          );
+    <Flex.Vertical>
+      {title && <Title>{title}</Title>}
+      {headerContent && headerContent}
+      <StyledDetailBox>
+        {options.map((option) => {
+          if (option.hidden) {
+            return null;
+          }
+          return <DetailRow option={option} data={data} key={option.name as Key} />;
         })}
-      </Flex.Vertical>
+      </StyledDetailBox>
     </Flex.Vertical>
   );
 }
