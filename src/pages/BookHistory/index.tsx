@@ -3,10 +3,13 @@ import PageTemplate from '@@components/PageTemplate';
 // import Pagination from '@@components/Pagination';
 import Table from '@@components/Table';
 import { BookingHistoryDetailLink } from '@@constants/links';
+import { useRetrieveList } from '@@stores/retrieve/hooks';
 
 import BookHistoryListFilter from './parts/BookHistoryListFilter';
 
 function BookHistory() {
+  const { data } = useRetrieveList();
+
   return (
     <PageTemplate headerContent='Book History'>
       <BookHistoryListFilter />
