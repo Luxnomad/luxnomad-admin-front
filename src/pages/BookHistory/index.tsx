@@ -8,7 +8,7 @@ import { useRetrieveList } from '@@stores/retrieve/hooks';
 import BookHistoryListFilter from './parts/BookHistoryListFilter';
 
 function BookHistory() {
-  const { data } = useRetrieveList();
+  useRetrieveList();
 
   return (
     <PageTemplate headerContent='Book History'>

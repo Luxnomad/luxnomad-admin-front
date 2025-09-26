@@ -7,7 +7,7 @@ import BookHistoryDetailHotelInfoSection from './parts/BookHistoryDetailHotelInf
 import BookHistoryDetailPaymentInfoSection from './parts/BookHistoryDetailPaymentInfoSection';
 
 function BookHistoryDetail() {
-  const data = useRetrieveDetail();
+  useRetrieveDetail();
 
   return (
     <PageTemplate headerContent='Book Detail'>

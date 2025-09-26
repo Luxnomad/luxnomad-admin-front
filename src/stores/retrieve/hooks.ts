@@ -5,7 +5,7 @@ import { useSWRDetail, useSWRList } from '@@utils/request/hooks';
 import { BookListResponse, RetrieveResponse } from './types';
 
 export const useRetrieveList = () => {
-  const { data, mutate } = useSWRList<BookListResponse[]>(`/hotel/retrieve/list`);
+  const { data, mutate } = useSWRList<BookListResponse[]>(`/admin/hotel/retrieve/list`);
 
   return {
     data: data?.data,
@@ -18,7 +18,7 @@ export const useRetrieveDetail = (reservationId?: string) => {
 
   const code = reservationId ?? id;
 
-  const { data, mutate } = useSWRDetail<RetrieveResponse>(`/hotel/retrieve/detail/${code}`, {
+  const { data, mutate } = useSWRDetail<RetrieveResponse>(`/admin/hotel/retrieve/detail/${code}`, {
     skip: !code,
   });
 
