@@ -6,7 +6,7 @@ import Flex from '@@components/Flex';
 import Typography from '@@components/Typography';
 import { PATH } from '@@constants/path';
 import useSearch from '@@hooks/useSearch';
-import { Room, RoomSearchRequest } from '@@stores/book/types';
+import { RateInfo, Room, RoomSearchRequest } from '@@stores/book/types';
 
 const StyledRoomInfoItem = styled(Flex.Horizontal)`
   gap: 12px;
@@ -26,9 +26,9 @@ function RoomInfoItem({ room }: { room: Room }) {
   const query = useSearch<RoomSearchRequest>();
   const navigate = useNavigate();
 
-  const handleClickBook = () => {
+  const handleClickBook = (rate: RateInfo) => {
     navigate(`${PATH.BOOK}/reservation`, {
-      state: { room, searchInfo: query },
+      state: { room, rate, searchInfo: query },
     });
   };
 
@@ -42,13 +42,19 @@ function RoomInfoItem({ room }: { room: Room }) {
             <span>Bed Type: {room.bedType}</span>
             <span className='tw-ml-[8px]'>Bed Count: {room.bedQuantity}</span>
           </Typography.Body3>
-          <Typography.Body3>
-            {room.price.toLocaleString()} {room.currency}
-          </Typography.Body3>
+          <Flex.Vertical gap={8}>
+            {room.rates.map((rate, index) => (
+              <Flex.Horizontal key={rate.rateKey} alignItems='center' gap={16}>
+                <Typography.Body3 key={rate.rateKey}>
+                  [Rate {index + 1}] - {rate.price.toLocaleString()} {rate.currency}
+                </Typography.Body3>
+                <Button size='small' onClick={() => handleClickBook(rate)}>
+                  Choose this rate
+                </Button>
+              </Flex.Horizontal>
+            ))}
+          </Flex.Vertical>
         </Flex.Vertical>
-        <Button className='tw-self-start' size='small' onClick={handleClickBook}>
-          Show Rules And Book
-        </Button>
       </Flex.Vertical>
     </StyledRoomInfoItem>
   );

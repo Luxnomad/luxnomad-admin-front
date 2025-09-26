@@ -33,6 +33,10 @@ export interface Room {
   roomImage: string;
   bedType: string;
   bedQuantity: number;
+  rates: RateInfo[];
+}
+
+export interface RateInfo {
   price: number;
   currency: string;
   rateDescription: string;

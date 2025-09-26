@@ -2,26 +2,30 @@ import { useEffect, useState } from 'react';
 
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
-import { showErrorToast } from '@@components/Toast';
+import { showErrorToast, showSuccessToast } from '@@components/Toast';
 import { PATH } from '@@constants/path';
+import { PAGES } from '@@constants/permissions';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import {
   confirmReservationFailure,
   confirmReservationRequest,
+  confirmReservationSuccess,
   // confirmReservationSuccess,
   fetchHotelRulesFailure,
   fetchHotelRulesRequest,
   fetchHotelRulesSuccess,
 } from '@@stores/book/reducer';
-import { HotelRulesResponse, ReservationRequest, Room, RoomSearchRequest } from '@@stores/book/types';
+import { HotelRulesResponse, RateInfo, ReservationRequest, Room, RoomSearchRequest } from '@@stores/book/types';
 
 import ReservationFormContent from './parts/ReservationFormContent';
 
 function Reservation() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const room = useLocation().state?.room as Room;
+  const rate = useLocation().state?.rate as RateInfo;
   const searchInfo = useLocation().state?.searchInfo as RoomSearchRequest;
   const [rules, setRules] = useState<HotelRulesResponse | null>(null);
 
@@ -30,10 +34,10 @@ function Reservation() {
   };
 
   useEffect(() => {
-    if (room) {
-      dispatch(fetchHotelRulesRequest(room.rateKey));
+    if (rate) {
+      dispatch(fetchHotelRulesRequest(rate.rateKey));
     }
-  }, [room, dispatch]);
+  }, [rate, dispatch]);
 
   useActionSubscribe({
     type: fetchHotelRulesFailure.type,
@@ -56,13 +60,15 @@ function Reservation() {
     },
   });
 
-  // useActionSubscribe({
-  //   type: confirmReservationSuccess.type,
-  //   callback: ({ payload }: ReturnType<typeof confirmReservationSuccess>) => {
-  //   },
-  // });
+  useActionSubscribe({
+    type: confirmReservationSuccess.type,
+    callback: () => {
+      showSuccessToast('Request Reservation Successfully');
+      navigate(PAGES.BOOK);
+    },
+  });
 
-  if (!room) {
+  if (!rate) {
     return <Navigate to={PATH.BOOK} replace />;
   }
 
