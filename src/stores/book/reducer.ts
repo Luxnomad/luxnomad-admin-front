@@ -4,7 +4,9 @@ import { BookState, HotelRulesResponse, ReservationRequest, RoomSearchRequest, R
 
 const name = 'book';
 
-const initialState: BookState = {};
+const initialState: BookState = {
+  initialSearch: false,
+};
 
 export const searchRoomRequest = createAction<RoomSearchRequest>(`${name}/searchRoomRequest`);
 export const searchRoomFailure = createAction<string>(`${name}/searchRoomFailure`);
@@ -23,10 +25,14 @@ const bookSlice = createSlice({
   reducers: {
     searchRoomSuccess(state, { payload }: PayloadAction<RoomSearchResponse>) {
       state.roomResponse = payload;
+      state.initialSearch = true;
+    },
+    checkInitialSearch(state) {
+      state.initialSearch = true;
     },
   },
 });
 
-export const { searchRoomSuccess } = bookSlice.actions;
+export const { searchRoomSuccess, checkInitialSearch } = bookSlice.actions;
 
 export default bookSlice.reducer;

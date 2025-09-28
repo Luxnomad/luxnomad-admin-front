@@ -6,4 +6,5 @@ export interface SuggestionProps<T> {
   getOptionLabel: (option: T) => string;
   textFieldProps?: TextFieldProps;
   fullWidth?: boolean;
+  defaultValue?: T;
 }

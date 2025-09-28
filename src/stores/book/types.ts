@@ -1,4 +1,5 @@
 export interface BookState {
+  initialSearch: boolean;
   roomResponse?: RoomSearchResponse;
 }
 

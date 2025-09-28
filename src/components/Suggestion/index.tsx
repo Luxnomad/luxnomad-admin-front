@@ -4,12 +4,13 @@ import { useSuggestion } from '@@components/Suggestion/hooks';
 import { SuggestionProps } from '@@components/Suggestion/types';
 // import TextField from '@@components/TextField';
 
-function Suggestion<T>({ fetcher, onChange, getOptionLabel, fullWidth, textFieldProps }: SuggestionProps<T>) {
+function Suggestion<T>({ fetcher, onChange, getOptionLabel, fullWidth, textFieldProps, defaultValue }: SuggestionProps<T>) {
   const { inputValue, setInputValue, options, loading } = useSuggestion<T>(fetcher);
 
   return (
     <Autocomplete
       options={options}
+      defaultValue={defaultValue}
       getOptionLabel={(option) => getOptionLabel(option as T)}
       filterOptions={(x) => x}
       inputValue={inputValue}

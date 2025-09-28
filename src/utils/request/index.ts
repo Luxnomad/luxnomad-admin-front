@@ -18,8 +18,6 @@ const responseInterceptor = (axiosRes: AxiosResponse) => {
     ok,
   };
 
-  console.log(response);
-
   return response;
 };
 

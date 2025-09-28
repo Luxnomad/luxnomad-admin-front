@@ -1,4 +1,5 @@
 import { AdminDetailResponse } from '@@stores/auth/types';
+import { HotelSearchResponse } from '@@stores/book/types';
 import { STORAGE_KEYS } from '@@utils/localStorage/constants';
 
 export const get = (name: string) => localStorage.getItem(name);
@@ -17,12 +18,26 @@ export const getMemberData = (): AdminDetailResponse | null => {
   }
 };
 
+export const getHotelSearchInfo = (): HotelSearchResponse | null => {
+  const hotel = get(STORAGE_KEYS.hotelSearchInfo);
+  try {
+    const parsedHotelSearchInfo = JSON.parse(hotel ?? '');
+    return parsedHotelSearchInfo;
+  } catch {
+    return null;
+  }
+};
+
 export const set = (name: string, value: string) => {
   localStorage.setItem(name, value);
 };
 
 export const saveToken = (accessToken: string) => {
   set(STORAGE_KEYS.accessToken, accessToken);
+};
+
+export const saveHotelSearchInfo = (info: HotelSearchResponse) => {
+  localStorage.setItem(STORAGE_KEYS.hotelSearchInfo, JSON.stringify(info));
 };
 
 export const clearToken = () => {
@@ -35,4 +50,8 @@ export const saveMemberData = (member: AdminDetailResponse) => {
 
 export const clearMemberData = () => {
   remove(STORAGE_KEYS.memberData);
+};
+
+export const clearHotelSearchInfo = () => {
+  remove(STORAGE_KEYS.hotelSearchInfo);
 };

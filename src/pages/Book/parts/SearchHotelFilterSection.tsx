@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { TextField } from '@mui/material';
 import { format } from 'date-fns';
 import dayjs, { isDayjs } from 'dayjs';
@@ -9,9 +11,11 @@ import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
 import Suggestion from '@@components/Suggestion';
 import { showErrorToast } from '@@components/Toast';
+import { useAppState } from '@@store/hooks';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
-import { searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
+import { checkInitialSearch, searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
 import { RoomSearchRequest } from '@@stores/book/types';
+import { clearHotelSearchInfo, getHotelSearchInfo, saveHotelSearchInfo } from '@@utils/localStorage';
 import { useQueryParams } from '@@utils/request/hooks';
 import { searchHotel } from '@@utils/searchRequests';
 
@@ -20,12 +24,20 @@ const initialQuery: Partial<RoomSearchRequest> = {
   adultCount: 1,
 };
 
+const hotelSearchInfo = getHotelSearchInfo();
+
 function SearchHotelFilterSection() {
   const dispatch = useDispatch();
+  const { initialSearch } = useAppState((state) => state.book);
 
   const { query, updateAllQueries } = useQueryParams(initialQuery, {
     initialSearch: ({ adultCount }) => !adultCount,
   });
+
+  const defaultHotelInfo =
+    hotelSearchInfo && hotelSearchInfo.chainCode === query.chainCode && hotelSearchInfo.propertyCode === query.propertyCode
+      ? hotelSearchInfo
+      : undefined;
 
   const updateSearchData = (data: Partial<RoomSearchRequest>) => {
     updateAllQueries({ ...query, ...data });
@@ -44,6 +56,14 @@ function SearchHotelFilterSection() {
     },
   });
 
+  useEffect(() => {
+    if (!initialSearch && query.chainCode && query.propertyCode && query.checkIn && query.checkOut) {
+      dispatch(searchRoomRequest(query as RoomSearchRequest));
+    } else if (!initialSearch) {
+      dispatch(checkInitialSearch());
+    }
+  }, [initialSearch, query, dispatch]);
+
   return (
     <Flex.Vertical gap={12}>
       <Row>
@@ -51,7 +71,16 @@ function SearchHotelFilterSection() {
           <Suggestion
             fullWidth
             fetcher={searchHotel}
-            onChange={(value) => updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode })}
+            defaultValue={defaultHotelInfo}
+            onChange={(value) => {
+              if (value) {
+                saveHotelSearchInfo(value);
+                updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode });
+              } else {
+                clearHotelSearchInfo();
+                updateSearchData({ propertyCode: undefined, chainCode: undefined });
+              }
+            }}
             getOptionLabel={({ name, region, country }) => `${region} ${country} - ${name}`}
             textFieldProps={{
               placeholder: 'Search By Hotel Name',

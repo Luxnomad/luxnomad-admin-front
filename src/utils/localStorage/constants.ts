@@ -1,4 +1,5 @@
 export const STORAGE_KEYS = {
   accessToken: 'access_token',
-  memberData: 'memberData',
+  memberData: 'member_data',
+  hotelSearchInfo: 'hotel_search_info',
 } as const;
