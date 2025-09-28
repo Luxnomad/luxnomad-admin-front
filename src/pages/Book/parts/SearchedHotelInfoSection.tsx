@@ -1,3 +1,6 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+
 import Flex from '@@components/Flex';
 import Typography from '@@components/Typography';
 import { useAppState } from '@@store/hooks';
@@ -18,7 +21,14 @@ function SearchedHotelInfoSection() {
         <Flex.Vertical className='tw-flex-1' gap={8}>
           <Typography.Headline2>{data.hotelName}</Typography.Headline2>
           <Typography.Body3 color='#353535'>Address - {data.address}</Typography.Body3>
-          <Typography.Body2>{data.description}</Typography.Body2>
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel2-content' id='panel2-header'>
+              <Typography.Headline2>Hotel Description</Typography.Headline2>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography.Body2>{data.description}</Typography.Body2>
+            </AccordionDetails>
+          </Accordion>
         </Flex.Vertical>
         <div className='tw-w-[250px] tw-flex-shrink-0'>
           <HotelImageSlider images={data.hotelImages} />
