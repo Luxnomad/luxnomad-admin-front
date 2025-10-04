@@ -1,3 +1,5 @@
+import { TextareaHTMLAttributes } from 'react';
+
 import styled from 'styled-components';
 
 const StyledTextArea = styled.textarea`
@@ -15,7 +17,7 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-function TextArea({ ...props }) {
+function TextArea({ ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return <StyledTextArea {...props} />;
 }
 

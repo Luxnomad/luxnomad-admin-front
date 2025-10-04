@@ -16,6 +16,7 @@ const StyledPageTemplate = styled(Flex.Vertical)`
     min-height: 40px;
     padding: 5px 20px;
     background: #eee;
+    width: 100%;
   }
 
   .page_template__body {

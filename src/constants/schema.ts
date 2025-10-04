@@ -129,3 +129,7 @@ export const adminSchema = object({
   permission: array(string().oneOf(ALL_USER_PERMISSION, { message: '올바르지 않은 권한입니다.' })).min(1, '권한을 최소 한개 이상 선택해주세요.'),
   platformId: string(),
 });
+
+export const memoSchema = object({
+  memo: string().required('Memo content is required field.'),
+});
