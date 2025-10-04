@@ -1,27 +1,52 @@
 import Detail from '@@components/Detail';
+import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 function BookHistoryDetailHotelInfoSection() {
+  const { data } = useRetrieveDetail();
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <Detail
-      title='Hotel Info'
-      data={{
-        hotelName: 'JW Marriott Marquis Hotel Dubai',
-        address: 'Sheikh Zayed Road, Business Bay, Dubai, Emirate of Dubai, United Arab Emirates',
-        roomType: 'Deluxe King Room',
-        checkIn: '2025-10-20',
-        checkOut: '2025-10-25',
-        createdAt: '2025-09-10',
-        guests: 2,
-        status: 'Booked',
-      }}
+      title='Book Info'
+      data={data}
       options={[
+        {
+          name: 'reservationId',
+          title: 'Reservation ID',
+          size: 6,
+        },
+        {
+          name: 'bookingCode',
+          title: 'Booking Code',
+          size: 6,
+        },
+        {
+          name: 'confirmationNumber',
+          title: 'Confirmation Number',
+          size: 6,
+        },
+        {
+          name: 'rateId',
+          title: 'Rate ID',
+          size: 6,
+        },
         {
           name: 'hotelName',
           title: 'Hotel Name',
+          size: 6,
         },
         {
-          name: 'address',
-          title: 'Address',
+          name: 'hotelAddress',
+          title: 'Hotel Address',
+          size: 6,
+        },
+        {
+          name: 'hotelPhone',
+          title: 'Hotel Phone',
+          size: 6,
         },
         {
           name: 'roomType',
@@ -29,28 +54,42 @@ function BookHistoryDetailHotelInfoSection() {
           size: 6,
         },
         {
-          name: 'createdAt',
+          name: 'bookedDate',
           title: 'Booked Date',
           size: 6,
         },
         {
-          name: 'checkIn',
-          title: 'Check In',
-          size: 6,
-        },
-        {
-          name: 'checkOut',
-          title: 'Check Out',
-          size: 6,
-        },
-        {
-          name: 'guests',
+          name: 'guestCount',
           title: 'Guest Count',
+        },
+        {
+          name: 'checkInDate',
+          title: 'Check In Date',
+          size: 6,
+        },
+        {
+          name: 'checkOutDate',
+          title: 'Check Out Date',
           size: 6,
         },
         {
           name: 'status',
           title: 'Status',
+          size: 6,
+        },
+        {
+          name: 'cancelDeadline',
+          title: 'Cancel Deadline',
+          size: 6,
+        },
+        {
+          name: 'cancellationPolicy',
+          title: 'Cancellation Policy',
+          size: 6,
+        },
+        {
+          name: 'price',
+          title: 'Price',
           size: 6,
         },
       ]}

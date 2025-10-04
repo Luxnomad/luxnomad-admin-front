@@ -1,14 +1,11 @@
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
-import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 import BookHistoryDetailCustomerInfoSection from './parts/BookHistoryDetailCustomerInfoSection';
 import BookHistoryDetailHotelInfoSection from './parts/BookHistoryDetailHotelInfoSection';
 import BookHistoryDetailPaymentInfoSection from './parts/BookHistoryDetailPaymentInfoSection';
 
 function BookHistoryDetail() {
-  useRetrieveDetail();
-
   return (
     <PageTemplate headerContent='Book Detail'>
       <Flex.Vertical gap={24}>

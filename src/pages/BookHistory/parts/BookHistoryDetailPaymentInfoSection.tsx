@@ -1,30 +1,21 @@
 import Detail from '@@components/Detail';
+import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 function BookHistoryDetailPaymentInfoSection() {
+  const { data } = useRetrieveDetail();
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <Detail
       title='Payment Info'
-      data={{
-        priceCurrencyCode: 'KRW',
-        totalPrice: 1000000,
-        paymentCurrencyCode: 'KRW',
-        paymentAmount: 1000000,
-        cardExpireDate: '08/26',
-        cardType: 'Master Card',
-        cardHolderName: 'Wongil Kim',
-        cardNumber: '1234-****-****-****',
-      }}
+      data={data}
       options={[
-        {
-          name: 'price',
-          title: 'Price',
-          renderContent: ({ priceCurrencyCode, totalPrice }) => `${totalPrice.toLocaleString()} ${priceCurrencyCode}`,
-          size: 6,
-        },
         {
           name: 'paymentAmount',
           title: 'Payment Amount',
-          renderContent: ({ paymentCurrencyCode, paymentAmount }) => `${paymentAmount.toLocaleString()} ${paymentCurrencyCode}`,
           size: 6,
         },
         {
@@ -38,14 +29,14 @@ function BookHistoryDetailPaymentInfoSection() {
           size: 6,
         },
         {
-          name: 'cardHolderName',
+          name: 'holderName',
           title: 'Holder Name',
           size: 6,
         },
         {
           name: 'cardNumber',
           title: 'Card Number',
-          size: 6,
+          size: 12,
         },
       ]}
     />

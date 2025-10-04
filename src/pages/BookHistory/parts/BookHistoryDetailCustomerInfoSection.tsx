@@ -1,39 +1,41 @@
 import Detail from '@@components/Detail';
+import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 function BookHistoryDetailCustomerInfoSection() {
+  const { data } = useRetrieveDetail();
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <Detail
       title='Customer Info'
-      data={{
-        firstName: 'Wongil',
-        lastName: 'Kim',
-        phoneNumber: '01032841112',
-        email: 'judgevi52@gmail.com',
-        countryAccessCode: '82',
-        localCityCode: '82',
-        cityCode: '82',
-      }}
+      data={data}
       options={[
         {
-          name: 'name',
+          name: 'customerName',
           title: 'Name',
-          renderContent: ({ firstName, lastName }) => `${firstName} ${lastName}`,
           size: 6,
         },
         {
-          name: 'phoneNumber',
+          name: 'customerPhone',
           title: 'Phone',
           size: 6,
         },
         {
-          name: 'email',
+          name: 'customerEmail',
           title: 'Email',
           size: 6,
         },
         {
-          name: 'countryAccessCode',
+          name: 'customerCountryCode',
           title: 'Country Code',
           size: 6,
+        },
+        {
+          name: 'specialInstruction',
+          title: 'Special Instruction',
         },
       ]}
     />
