@@ -1,6 +1,9 @@
 import { AxiosError } from 'axios';
+import { SWRResponse } from 'swr';
 
 import { authenticatedRequest } from '@@utils/request';
+
+import { LuxnomadPageResponse, LuxnomadResponse } from './types';
 
 export const fetcher = async (url: string) => {
   const res = await authenticatedRequest.get(url);
@@ -51,3 +54,20 @@ export const createBlobJSON = (jsonString: string) =>
   new Blob([jsonString], {
     type: 'application/json;charset=UTF-8',
   });
+
+export const formatSWRListResponse = <Data>(response: SWRResponse<LuxnomadResponse<LuxnomadPageResponse<Data>>>) => {
+  const { data: swrData, ...swrResponse } = response;
+
+  const { content, totalElements, number, size, totalPages } = swrData?.data.body ?? {};
+
+  return {
+    ...swrResponse,
+    content,
+    page: {
+      total: totalElements ?? 0,
+      current: number ?? 0,
+      lastPage: totalPages ?? 0,
+      limit: size ?? 0,
+    },
+  } as const;
+};

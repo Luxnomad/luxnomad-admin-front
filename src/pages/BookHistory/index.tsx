@@ -1,14 +1,16 @@
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
 // import Pagination from '@@components/Pagination';
+import Pagination from '@@components/Pagination';
 import Table from '@@components/Table';
 import { BookingHistoryDetailLink } from '@@constants/links';
 import { useRetrieveList } from '@@stores/retrieve/hooks';
+import { getRowNumber } from '@@utils/pages';
 
 import BookHistoryListFilter from './parts/BookHistoryListFilter';
 
 function BookHistory() {
-  useRetrieveList();
+  const { content, page } = useRetrieveList();
 
   return (
     <PageTemplate headerContent='Book History'>
@@ -16,29 +18,52 @@ function BookHistory() {
       <Flex.Vertical className='tw-mt-[30px]'>
         <Table
           columns={[
-            { name: 'no', title: 'No' },
-            { name: 'code', title: 'Code', renderContent: ({ code }) => <BookingHistoryDetailLink id={code} /> },
-            { name: 'hotelName', title: 'Hotel Name' },
-            { name: 'guestName', title: 'Booker Name' },
-            { name: 'checkIn', title: 'Checkin Date' },
-            { name: 'checkOut', title: 'Checkout Date' },
-            { name: 'status', title: 'Status' },
-            { name: 'createdAt', title: 'Booked Date' },
-          ]}
-          rows={[
             {
-              no: 1,
-              code: 'BKD_202509100001',
-              hotelName: 'JW Marriott Marquis Hotel Dubai',
-              guestName: 'Wongil Kim',
-              checkIn: '2025-10-20',
-              checkOut: '2025-10-25',
-              status: 'Booked',
-              createdAt: '2025-09-10',
+              name: 'no',
+              title: 'No',
+              renderContent: getRowNumber(page.total, page.current, page.limit),
+            },
+            {
+              name: 'reservationId',
+              title: 'Reservation ID',
+              renderContent: ({ reservationId }) => <BookingHistoryDetailLink id={reservationId} />,
+            },
+            {
+              name: 'confirmationNumber',
+              title: 'Confirmation Number',
+            },
+            {
+              name: 'hotelName',
+              title: 'Hotel Name',
+            },
+            {
+              name: 'bookerName',
+              title: 'Booker Name',
+            },
+            {
+              name: 'checkinDate',
+              title: 'Check In Date',
+            },
+            {
+              name: 'checkoutDate',
+              title: 'Check Out Date',
+            },
+            {
+              name: 'status',
+              title: 'Status',
+            },
+            {
+              name: 'bookedDate',
+              title: 'Booked Date',
+            },
+            {
+              name: 'bookerId',
+              title: 'Booker ID',
             },
           ]}
+          rows={content ?? []}
         />
-        {/* <Pagination count={count} page={search.page} onChange={(page) => setSearch({ ...search, page })} /> */}
+        <Pagination lastPage={page.lastPage} current={page.current} />
       </Flex.Vertical>
     </PageTemplate>
   );

@@ -1,3 +1,10 @@
+export interface BookListRequest {
+  status?: string;
+  checkInDate?: string;
+  checkoutDate?: string;
+  page: number;
+}
+
 export interface BookListResponse {
   reservationId: string; // 예약 코드 travelport
   confirmationNumber: string; // 예약 코드 supplier

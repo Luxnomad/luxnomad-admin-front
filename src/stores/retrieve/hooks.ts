@@ -1,16 +1,22 @@
 import { useParams } from 'react-router-dom';
 
+import useSearch from '@@hooks/useSearch';
 import { useSWRDetail, useSWRList } from '@@utils/request/hooks';
+import { LuxnomadPageResponse } from '@@utils/request/types';
+import { formatSWRListResponse } from '@@utils/request/utils';
 
-import { BookListResponse, RetrieveResponse } from './types';
+import { BookListRequest, BookListResponse, RetrieveResponse } from './types';
 
-export const useRetrieveList = () => {
-  const { data, mutate } = useSWRList<BookListResponse[]>(`/admin/hotel/retrieve/list`);
+export const useRetrieveList = (query?: BookListRequest) => {
+  const search = useSearch<BookListRequest>();
+  const newQuery = query ?? search;
 
-  return {
-    data: data?.data,
-    mutate,
-  };
+  const data = useSWRList<LuxnomadPageResponse<BookListResponse>>(`/admin/hotel/retrieve/list`, {
+    query: newQuery,
+    skip: newQuery.page === undefined,
+  });
+
+  return formatSWRListResponse(data);
 };
 
 export const useRetrieveDetail = (reservationId?: string) => {

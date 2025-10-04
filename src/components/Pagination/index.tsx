@@ -7,7 +7,7 @@ function Pagination({ current, lastPage, onChange }: { current: number; lastPage
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (value: number) => {
-    searchParams.set('pageNo', String(value));
+    searchParams.set('page', String(value));
     setSearchParams(searchParams);
   };
 
