@@ -4747,6 +4747,11 @@ react-input-mask@^2.0.4:
     invariant "^2.2.4"
     warning "^4.0.2"
 
+react-international-phone@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/react-international-phone/-/react-international-phone-4.6.0.tgz#b6627a1771c1050cfddfcb9f7c6bc5260b3906c6"
+  integrity sha512-lzj5fLfACRKeaitggFIHWl6LM69aO2uivJbEVyVBjAe0+kkvZjToduqnK2/dm9Zu+l8XfVjd+Fn1ZAyG/t8XAg==
+
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"

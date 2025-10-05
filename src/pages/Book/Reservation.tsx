@@ -98,8 +98,8 @@ function Reservation() {
     },
     paymentCardInfo: {
       cardExpireDate: '',
-      cardType: '',
-      cardCode: '',
+      cardType: 'Credit',
+      cardCode: rules.acceptedCreditCard[0].value,
       cardHolderName: '',
       cardNumber: '',
       cardSeriesCode: '000', // 고정

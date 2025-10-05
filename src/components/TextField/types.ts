@@ -1,3 +1,6 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 
-export type TextFieldProps = InputHTMLAttributes<HTMLInputElement>;
+export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: ReactNode;
+  errorMessage?: ReactNode;
+}
