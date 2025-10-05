@@ -1,24 +1,16 @@
+import { format } from 'date-fns';
 import { Form, useFormikContext } from 'formik';
-import { Col, Row } from 'reactstrap';
 import styled from 'styled-components';
 
+import Detail from '@@components/Detail';
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
+import Title from '@@components/Title';
 import Typography from '@@components/Typography';
+import ReservationConfirmSection from '@@pages/Book/parts/ReservationConfirmSection';
 import { HotelRulesResponse, ReservationRequest, Room } from '@@stores/book/types';
 
-import PenaltyBox from './PenaltyBox';
-import ReservationConfirmSection from './ReservationConfirmSection';
-
 const StyledReservationFormContent = styled(PageTemplate)``;
-
-const Section = styled(Flex.Vertical)`
-  gap: 12px;
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-  }
-`;
 
 function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRulesResponse }) {
   const { handleSubmit } = useFormikContext<ReservationRequest>();
@@ -26,63 +18,73 @@ function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRules
   return (
     <Form onSubmit={handleSubmit}>
       <StyledReservationFormContent headerContent={`[${rules.bookingCode}] ${rules.hotelName} - ${room.roomType}`}>
-        <Section>
-          <h2 className='title'>Basic Info</h2>
-          <Row>
-            <Col md={3}>
-              <Typography.Body2>Schedules</Typography.Body2>
-            </Col>
-            <Col md={9}>
-              <Typography.Body2>
-                {rules.checkInDate} {rules.checkInTime} ~ {rules.checkOutDate} {rules.checkOutTime}
-              </Typography.Body2>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={3}>
-              <Typography.Body2>Price</Typography.Body2>
-            </Col>
-            <Col md={9}>
-              <Typography.Body2>
-                {rules.price.toLocaleString()} {rules.currency}
-              </Typography.Body2>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={3}>
-              <Typography.Body2>Breakfast included</Typography.Body2>
-            </Col>
-            <Col md={9}>
-              <Typography.Body2 color={rules.mealsIncluded ? 'green' : 'red'}>{rules.mealsIncluded ? 'O' : 'X'}</Typography.Body2>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={3}>
-              <Typography.Body2>Benefits</Typography.Body2>
-            </Col>
-            <Col md={9}>
-              <Typography.Body2>{rules.benefit}</Typography.Body2>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={3}>
-              <Typography.Body2>Description</Typography.Body2>
-            </Col>
-            <Col md={9}>
-              <Typography.Body2>
-                {rules.description.map((desc, index) => (
-                  <p key={index}>{desc}</p>
-                ))}
-              </Typography.Body2>
-            </Col>
-          </Row>
-        </Section>
-        <Section>
-          <h1 className='title'>Penalties</h1>
-          {rules.cancelPenalty.map((penalty, index) => (
-            <PenaltyBox penalty={penalty} key={index} />
-          ))}
-        </Section>
+        <Detail
+          title='Basic Info'
+          data={rules}
+          options={[
+            {
+              name: 'schedules',
+              title: 'Schedules',
+              renderContent: ({ checkInDate, checkInTime, checkOutDate, checkOutTime }) =>
+                `${checkInDate} ${checkInTime} ~ ${checkOutDate} ${checkOutTime}`,
+            },
+            {
+              name: 'price',
+              title: 'Price',
+              renderContent: ({ price, currency }) => `${price.toLocaleString()} ${currency}`,
+            },
+            {
+              name: 'mealsIncluded',
+              title: 'Meals included',
+              renderContent: ({ mealsIncluded }) => (
+                <Typography.Body2 color={mealsIncluded ? 'green' : 'red'}>{mealsIncluded ? 'O' : 'X'}</Typography.Body2>
+              ),
+            },
+            {
+              name: 'benefit',
+              title: 'Benefits',
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              renderContent: ({ description }) => description.map((desc, index) => <p key={index}>{desc}</p>),
+            },
+          ]}
+        />
+        <Flex.Vertical>
+          <Title>Penalties</Title>
+          <Flex.Vertical gap={8}>
+            {rules.cancelPenalty.map((penalty, index) => (
+              <Detail
+                key={index}
+                data={penalty}
+                options={[
+                  {
+                    name: 'deadline',
+                    title: 'Deadline',
+                    renderContent: ({ deadline }) =>
+                      `${format(deadline.start, 'yyyy.MM.dd')} ~ ${deadline.end ? format(deadline.end, 'yyyy.MM.dd') : ''}`,
+                  },
+                  {
+                    name: 'description',
+                    title: 'Description',
+                  },
+                  {
+                    name: 'refundable',
+                    title: 'Refundable',
+                    renderContent: ({ refundable }) =>
+                      refundable ? <span className='tw-text-green-700'>O</span> : <span className='tw-text-red-700'>X</span>,
+                  },
+                  {
+                    name: 'hotelPenalty',
+                    title: 'Hotel Penalty',
+                    renderContent: ({ hotelPenalty }) => `${hotelPenalty.percent} ${hotelPenalty.appliesTo}`,
+                  },
+                ]}
+              />
+            ))}
+          </Flex.Vertical>
+        </Flex.Vertical>
         <ReservationConfirmSection rules={rules} />
       </StyledReservationFormContent>
     </Form>

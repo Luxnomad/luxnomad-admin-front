@@ -80,11 +80,21 @@ function Reservation() {
     hotelInfo: {
       bookingCode: rules.bookingCode,
       roomQuantity: 1,
-      guests: searchInfo.adultCount + searchInfo.childCount,
+      adultGuestCount: searchInfo.adultCount,
+      childGuestCount: searchInfo.childCount,
       hotelPropertyCode: searchInfo.propertyCode,
       hotelChainCode: searchInfo.chainCode,
       checkin: rules.checkInDate,
       checkout: rules.checkOutDate,
+    },
+    priceInfo: {
+      priceCurrencyCode: rules.currency,
+      totalPrice: rules.price,
+      paymentCurrencyCode: rules.currency,
+      paymentAmount: rules.price,
+      rateCodeValue: rate.rateKey,
+      rateCodeName: 'V',
+      rateCodeId: 'STEPPROGRAM',
     },
     paymentCardInfo: {
       cardExpireDate: '',
@@ -92,42 +102,34 @@ function Reservation() {
       cardCode: '',
       cardHolderName: '',
       cardNumber: '',
-      cardSeriesCode: '',
-      cardTelephoneCountryAccessCode: '',
-      cardTelephoneAreaCityCode: '',
-      cardTelephoneCityCode: '',
+      cardSeriesCode: '000', // 고정
+      cardTelephoneCountryAccessCode: '0', // 고정
+      cardTelephoneAreaCityCode: '0', // 고정
+      cardTelephoneCityCode: 'A', // 고정
     },
     travelerInfo: {
       travelerFirstName: '',
       travelerLastName: '',
       travelerPhoneNumber: '',
-      travelerEmail: '',
-      travelerCountryAccessCode: '',
-      travelerLocalCityCode: '',
-      travelerCityCode: '',
+      travelerEmail: 'proj.luxnomad@gmail.com', // 고정
+      travelerCountryAccessCode: '886',
+      travelerLocalCityCode: '2', // 고정
+      travelerCityCode: 'TPE', // 고정
     },
     addressInfo: {
-      addressNumberValue: '',
-      addressStreet: '',
-      addressLine: '',
-      addressCity: '',
-      addressCounty: '',
-      addressStateProvValue: '',
-      addressStateProvName: '',
-      addressCountryValue: '',
-      addressCountryId: '',
-      addressCountryName: '',
-      addressCountryCodeContext: '',
-      addressPostalCode: '',
-    },
-    priceInfo: {
-      priceCurrencyCode: rules.currency,
-      totalPrice: rules.price,
-      paymentCurrencyCode: rules.currency,
-      paymentAmount: rules.price,
-      rateCodeValue: 'rateCodeValue',
-      rateCodeName: 'rateCodeName',
-      rateCodeId: 'rateCodeId',
+      // 고정 값
+      addressNumberValue: '6F',
+      addressStreet: 'No. 309, Zhuangjing Rd.',
+      addressLine: '6F, No. 309, Zhuangjing Rd.',
+      addressCity: 'Taipei',
+      addressCounty: '886',
+      addressStateProvValue: '2',
+      addressStateProvName: 'Taipei',
+      addressCountryValue: 'TW',
+      addressCountryId: 'country_886',
+      addressCountryName: 'Taiwan',
+      addressCountryCodeContext: 'Example String Value',
+      addressPostalCode: 'n/a',
     },
   };
 

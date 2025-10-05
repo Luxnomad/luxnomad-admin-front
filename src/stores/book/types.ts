@@ -31,7 +31,7 @@ export interface RoomSearchResponse {
 export interface Room {
   roomType: string;
   viewType: string;
-  roomImage: string[];
+  roomImages: string[];
   bedType: string;
   bedQuantity: number;
   rates: RateInfo[];

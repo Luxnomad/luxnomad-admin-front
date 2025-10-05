@@ -84,8 +84,7 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
           </Col>
         </Row>
       </Section>
-
-      <Section>
+      {/* <Section>
         <h1 className='title'>Address Info</h1>
         <Row>
           <Col md={6}>
@@ -105,7 +104,7 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
             </InputMask>
           </Col>
         </Row>
-      </Section>
+      </Section> */}
       <Button style={{ marginTop: 30 }} type='submit'>
         Reservation
       </Button>
