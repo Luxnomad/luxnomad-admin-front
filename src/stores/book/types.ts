@@ -31,7 +31,7 @@ export interface RoomSearchResponse {
 export interface Room {
   roomType: string;
   viewType: string;
-  roomImage: string;
+  roomImage: string[];
   bedType: string;
   bedQuantity: number;
   rates: RateInfo[];
@@ -89,16 +89,18 @@ export interface ReservationRequest {
   paymentCardInfo: PaymentCardInfoRequest;
   travelerInfo: TravelerInfoRequest;
   addressInfo: AddressInfoRequest;
+  requestComment?: string;
 }
 
 export interface HotelInfoRequest {
   bookingCode: string;
-  roomQuantity: number; // Java long → number
-  guests: number; // Java int → number
+  roomQuantity: number;
+  childGuestCount: number;
+  adultGuestCount: number;
   hotelPropertyCode: string;
   hotelChainCode: string;
-  checkin: string; // Java LocalDate → string (ISO-8601)
-  checkout: string; // Java LocalDate → string (ISO-8601)
+  checkin: string;
+  checkout: string;
 }
 
 export interface PriceInfoRequest {

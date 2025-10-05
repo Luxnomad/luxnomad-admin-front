@@ -8,6 +8,8 @@ import { PATH } from '@@constants/path';
 import useSearch from '@@hooks/useSearch';
 import { RateInfo, Room, RoomSearchRequest } from '@@stores/book/types';
 
+import HotelImageSlider from './HotelImageSlider';
+
 const StyledRoomInfoItem = styled(Flex.Horizontal)`
   gap: 12px;
 
@@ -34,7 +36,9 @@ function RoomInfoItem({ room }: { room: Room }) {
 
   return (
     <StyledRoomInfoItem>
-      <img className='room__image' src={room.roomImage} />
+      <div className='room__image'>
+        <HotelImageSlider images={room.roomImages} />
+      </div>
       <Flex.Vertical className='tw-flex-shrink-0'>
         <Flex.Vertical className='room__info'>
           <Typography.Subtitle1>{room.roomType}</Typography.Subtitle1>
