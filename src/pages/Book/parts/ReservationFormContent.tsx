@@ -18,74 +18,76 @@ function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRules
   return (
     <Form onSubmit={handleSubmit}>
       <StyledReservationFormContent headerContent={`[${rules.bookingCode}] ${rules.hotelName} - ${room.roomType}`}>
-        <Detail
-          title='Basic Info'
-          data={rules}
-          options={[
-            {
-              name: 'schedules',
-              title: 'Schedules',
-              renderContent: ({ checkInDate, checkInTime, checkOutDate, checkOutTime }) =>
-                `${checkInDate} ${checkInTime} ~ ${checkOutDate} ${checkOutTime}`,
-            },
-            {
-              name: 'price',
-              title: 'Price',
-              renderContent: ({ price, currency }) => `${price.toLocaleString()} ${currency}`,
-            },
-            {
-              name: 'mealsIncluded',
-              title: 'Meals included',
-              renderContent: ({ mealsIncluded }) => (
-                <Typography.Body2 color={mealsIncluded ? 'green' : 'red'}>{mealsIncluded ? 'O' : 'X'}</Typography.Body2>
-              ),
-            },
-            {
-              name: 'benefit',
-              title: 'Benefits',
-            },
-            {
-              name: 'description',
-              title: 'Description',
-              renderContent: ({ description }) => description.map((desc, index) => <p key={index}>{desc}</p>),
-            },
-          ]}
-        />
-        <Flex.Vertical>
-          <Title>Penalties</Title>
-          <Flex.Vertical gap={8}>
-            {rules.cancelPenalty.map((penalty, index) => (
-              <Detail
-                key={index}
-                data={penalty}
-                options={[
-                  {
-                    name: 'deadline',
-                    title: 'Deadline',
-                    renderContent: ({ deadline }) =>
-                      `${format(deadline.start, 'yyyy.MM.dd')} ~ ${deadline.end ? format(deadline.end, 'yyyy.MM.dd') : ''}`,
-                  },
-                  {
-                    name: 'description',
-                    title: 'Description',
-                  },
-                  {
-                    name: 'refundable',
-                    title: 'Refundable',
-                    renderContent: ({ refundable }) =>
-                      refundable ? <span className='tw-text-green-700'>O</span> : <span className='tw-text-red-700'>X</span>,
-                  },
-                  {
-                    name: 'hotelPenalty',
-                    title: 'Hotel Penalty',
-                    renderContent: ({ hotelPenalty }) => `${hotelPenalty.percent} ${hotelPenalty.appliesTo}`,
-                  },
-                ]}
-              />
-            ))}
+        <Flex.Vertical gap={24}>
+          <Detail
+            title='Basic Info'
+            data={rules}
+            options={[
+              {
+                name: 'schedules',
+                title: 'Schedules',
+                renderContent: ({ checkInDate, checkInTime, checkOutDate, checkOutTime }) =>
+                  `${checkInDate} ${checkInTime} ~ ${checkOutDate} ${checkOutTime}`,
+              },
+              {
+                name: 'price',
+                title: 'Price',
+                renderContent: ({ price, currency }) => `${price.toLocaleString()} ${currency}`,
+              },
+              {
+                name: 'mealsIncluded',
+                title: 'Meals included',
+                renderContent: ({ mealsIncluded }) => (
+                  <Typography.Body2 color={mealsIncluded ? 'green' : 'red'}>{mealsIncluded ? 'O' : 'X'}</Typography.Body2>
+                ),
+              },
+              {
+                name: 'benefit',
+                title: 'Benefits',
+              },
+              {
+                name: 'description',
+                title: 'Description',
+                renderContent: ({ description }) => description.map((desc, index) => <p key={index}>{desc}</p>),
+              },
+            ]}
+          />
+          <Flex.Vertical>
+            <Title>Penalties</Title>
+            <Flex.Vertical gap={8}>
+              {rules.cancelPenalty.map((penalty, index) => (
+                <Detail
+                  key={index}
+                  data={penalty}
+                  options={[
+                    {
+                      name: 'deadline',
+                      title: 'Deadline',
+                      renderContent: ({ deadline }) =>
+                        `${format(deadline.start, 'yyyy.MM.dd')} ~ ${deadline.end ? format(deadline.end, 'yyyy.MM.dd') : ''}`,
+                    },
+                    {
+                      name: 'description',
+                      title: 'Description',
+                    },
+                    {
+                      name: 'refundable',
+                      title: 'Refundable',
+                      renderContent: ({ refundable }) =>
+                        refundable ? <span className='tw-text-green-700'>O</span> : <span className='tw-text-red-700'>X</span>,
+                    },
+                    {
+                      name: 'hotelPenalty',
+                      title: 'Hotel Penalty',
+                      renderContent: ({ hotelPenalty }) => `${hotelPenalty.percent} ${hotelPenalty.appliesTo}`,
+                    },
+                  ]}
+                />
+              ))}
+            </Flex.Vertical>
           </Flex.Vertical>
+          <ReservationConfirmSection rules={rules} />
         </Flex.Vertical>
-        <ReservationConfirmSection rules={rules} />
       </StyledReservationFormContent>
     </Form>
   );

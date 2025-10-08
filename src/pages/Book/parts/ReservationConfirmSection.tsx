@@ -1,27 +1,23 @@
+import { useState } from 'react';
+
 import { useFormikContext } from 'formik';
 import InputMask from 'react-input-mask';
 import { PhoneInput } from 'react-international-phone';
-import { Col, Row } from 'reactstrap';
-import styled from 'styled-components';
 
 import Button from '@@components/Button';
 import Detail from '@@components/Detail';
 import Dropdown from '@@components/Dropdown';
+import FilterGroup from '@@components/FilterGroup';
 import Flex from '@@components/Flex';
 import TextField from '@@components/TextField'; // 사용자 정의 Input
 import { CREDIT_CARD_STRING } from '@@stores/book/constants';
 import { HotelRulesResponse, ReservationRequest } from '@@stores/book/types';
 
-const Section = styled(Flex.Vertical)`
-  gap: 12px;
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-  }
-`;
+import 'react-international-phone/style.css';
 
 function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
-  const { getFieldProps } = useFormikContext<ReservationRequest>();
+  const [phone, setPhone] = useState<string>('');
+  const { getFieldProps, values, setValues, isValid, errors } = useFormikContext<ReservationRequest>();
 
   const cardList = Array.from(new Set(rules.acceptedCreditCard.map((v) => v.value)));
 
@@ -54,7 +50,7 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
                   placeholder='Card Number'
                   {...getFieldProps('paymentCardInfo.cardNumber')}
                 >
-                  {(inputProps) => <TextField {...inputProps} />}
+                  {(inputProps) => <TextField {...inputProps} errorMessage={errors.paymentCardInfo?.cardNumber} />}
                 </InputMask>
               </Flex.Horizontal>
             ),
@@ -63,12 +59,8 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
             name: 'cardExpireDate',
             title: 'Expire Date',
             renderContent: (
-              <InputMask
-                mask='99/99' // 카드 번호
-                placeholder='MM/YY'
-                {...getFieldProps('paymentCardInfo.cardExpireDate')}
-              >
-                {(inputProps) => <TextField {...inputProps} />}
+              <InputMask mask='99/99' placeholder='MM/YY' {...getFieldProps('paymentCardInfo.cardExpireDate')}>
+                {(inputProps) => <TextField {...inputProps} errorMessage={errors.paymentCardInfo?.cardExpireDate} />}
               </InputMask>
             ),
             size: 6,
@@ -76,7 +68,13 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
           {
             name: 'cardHolderName',
             title: 'Card Holder Name',
-            renderContent: <TextField {...getFieldProps('paymentCardInfo.cardHolderName')} placeholder='ex. Justin Rew' />,
+            renderContent: (
+              <TextField
+                {...getFieldProps('paymentCardInfo.cardHolderName')}
+                placeholder='ex. Justin Rew'
+                errorMessage={errors.paymentCardInfo?.cardHolderName}
+              />
+            ),
             size: 6,
           },
         ]}
@@ -89,54 +87,40 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
             name: 'name',
             title: 'Name',
             renderContent: (
-              <Flex.Horizontal gap={8}>
-                <TextField placeholder='First Name' {...getFieldProps('travelerInfo.travelerFirstName')} />
-                <TextField placeholder='Last Name' {...getFieldProps('travelerInfo.travelerLastName')} />
-              </Flex.Horizontal>
+              <FilterGroup errorMessage={errors.travelerInfo?.travelerFirstName ?? errors.travelerInfo?.travelerLastName}>
+                <Flex.Horizontal gap={8}>
+                  <TextField placeholder='First Name' {...getFieldProps('travelerInfo.travelerFirstName')} />
+                  <TextField placeholder='Last Name' {...getFieldProps('travelerInfo.travelerLastName')} />
+                </Flex.Horizontal>
+              </FilterGroup>
             ),
           },
           {
             name: 'travelerPhoneNumber',
             title: 'Phone Number',
-            renderContent: <PhoneInput defaultCountry='ua' />,
+            renderContent: (
+              <FilterGroup errorMessage={errors.travelerInfo?.travelerCountryAccessCode ?? errors.travelerInfo?.travelerPhoneNumber}>
+                <PhoneInput
+                  defaultCountry='ua'
+                  value={phone}
+                  onChange={(phone, { country, inputValue }) => {
+                    setPhone(phone);
+                    setValues({
+                      ...values,
+                      travelerInfo: {
+                        ...values.travelerInfo,
+                        travelerCountryAccessCode: country.dialCode,
+                        travelerPhoneNumber: inputValue,
+                      },
+                    });
+                  }}
+                />
+              </FilterGroup>
+            ),
           },
         ]}
       />
-      <Section>
-        <h1 className='title'>Traveler Info</h1>
-        <Row>
-          <Col md={6}>
-            <InputMask
-              mask='999-9999-9999' // 예: 한국 휴대폰 번호
-              {...getFieldProps('travelerInfo.travelerPhoneNumber')}
-            >
-              {(inputProps) => <TextField {...inputProps} placeholder='Phone Number' />}
-            </InputMask>
-          </Col>
-        </Row>
-      </Section>
-      {/* <Section>
-        <h1 className='title'>Address Info</h1>
-        <Row>
-          <Col md={6}>
-            <TextField placeholder='Street' {...getFieldProps('addressInfo.addressStreet')} />
-          </Col>
-          <Col md={6}>
-            <TextField placeholder='City' {...getFieldProps('addressInfo.addressCity')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <InputMask
-              mask='99999' // 우편번호 5자리
-              {...getFieldProps('addressInfo.addressPostalCode')}
-            >
-              {(inputProps) => <TextField {...inputProps} placeholder='Postal Code' />}
-            </InputMask>
-          </Col>
-        </Row>
-      </Section> */}
-      <Button style={{ marginTop: 30 }} type='submit'>
+      <Button style={{ marginTop: 30 }} type='submit' disabled={!isValid}>
         Reservation
       </Button>
     </>

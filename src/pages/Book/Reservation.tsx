@@ -7,6 +7,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { showErrorToast, showSuccessToast } from '@@components/Toast';
 import { PATH } from '@@constants/path';
 import { PAGES } from '@@constants/permissions';
+import { reservationSchema } from '@@constants/schema';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import {
   confirmReservationFailure,
@@ -64,7 +65,7 @@ function Reservation() {
     type: confirmReservationSuccess.type,
     callback: () => {
       showSuccessToast('Request Reservation Successfully');
-      navigate(PAGES.BOOK);
+      navigate(PAGES.BOOK_HISTORY);
     },
   });
 
@@ -134,7 +135,7 @@ function Reservation() {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={reservationSchema}>
       <ReservationFormContent room={room} rules={rules} />
     </Formik>
   );
