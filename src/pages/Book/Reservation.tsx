@@ -31,7 +31,16 @@ function Reservation() {
   const [rules, setRules] = useState<HotelRulesResponse | null>(null);
 
   const handleSubmit = (form: ReservationRequest) => {
-    dispatch(confirmReservationRequest(form));
+    if (
+      window.confirm(`Please check your reservation again.
+      Hotel Name: ${rules?.hotelName}
+      Check In: ${form.hotelInfo.checkin}
+      Check Out: ${form.hotelInfo.checkout}
+      Adult Count: ${form.hotelInfo.adultGuestCount}
+      Child Count: ${form.hotelInfo.childGuestCount}`)
+    ) {
+      dispatch(confirmReservationRequest(form));
+    }
   };
 
   useEffect(() => {
@@ -132,6 +141,7 @@ function Reservation() {
       addressCountryCodeContext: 'Example String Value',
       addressPostalCode: 'n/a',
     },
+    requestComment: '',
   };
 
   return (
