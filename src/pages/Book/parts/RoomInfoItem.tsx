@@ -10,8 +10,12 @@ import { RateInfo, Room, RoomSearchRequest } from '@@stores/book/types';
 
 import HotelImageSlider from './HotelImageSlider';
 
-const StyledRoomInfoItem = styled(Flex.Horizontal)`
+const StyledRoomInfoItem = styled(Flex.Vertical)`
   gap: 12px;
+  padding: 24px 0;
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #b8b8b8;
+  }
 
   .room__image {
     flex: 0 0 auto;
@@ -21,6 +25,14 @@ const StyledRoomInfoItem = styled(Flex.Horizontal)`
 
   .room__info {
     flex: 1;
+  }
+
+  .rate__info {
+    padding: 12px 16px;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid #dcdcdc;
+    }
   }
 `;
 
@@ -36,28 +48,32 @@ function RoomInfoItem({ room }: { room: Room }) {
 
   return (
     <StyledRoomInfoItem>
-      <div className='room__image'>
-        <HotelImageSlider images={room.roomImages} />
-      </div>
-      <Flex.Vertical className='tw-flex-shrink-0'>
+      <Flex.Horizontal gap={12}>
+        <div className='room__image'>
+          <HotelImageSlider images={room.roomImages} />
+        </div>
         <Flex.Vertical className='room__info'>
           <Typography.Subtitle1>{room.roomType}</Typography.Subtitle1>
-          <Typography.Body3>
-            <span>Bed Type: {room.bedType}</span>
-            <span className='tw-ml-[8px]'>Bed Count: {room.bedQuantity}</span>
-          </Typography.Body3>
-          <Flex.Vertical className='tw-mt-[12px]' gap={24}>
-            {room.rates.map((rate, index) => (
-              <Flex.Vertical gap={2} key={rate.rateKey} alignItems='flex-start'>
+          <Typography.Body2>Bed Type: {room.bedType}</Typography.Body2>
+          <Typography.Body2>Bed Quantity: {room.bedQuantity}</Typography.Body2>
+          <Typography.Body2>View Type: {room.viewType}</Typography.Body2>
+        </Flex.Vertical>
+      </Flex.Horizontal>
+      <Flex.Vertical className='tw-flex-shrink-0'>
+        <Flex.Vertical>
+          {room.rates.map((rate) => (
+            <Flex.Horizontal className='rate__info' gap={2} key={rate.rateKey} alignItems='flex-start' justifyContent='space-between'>
+              <Flex.Vertical>
+                <Typography.Subtitle2>[{rate.rateDescription}]</Typography.Subtitle2>
                 <Typography.Body3>
-                  [Rate {index + 1}]: {rate.price.toLocaleString()} {rate.currency}
+                  Price: {rate.price.toLocaleString()} {rate.currency}
                 </Typography.Body3>
-                <Typography.Caption1>RAC: {rate.rateCode}</Typography.Caption1>
-                <Typography.Caption1>Partnership: {rate.partnershipName}</Typography.Caption1>
-                <Button.Medium onClick={() => handleClickBook(rate)}>Choose this rate</Button.Medium>
+                <Typography.Body3>RAC: {rate.rateCode}</Typography.Body3>
+                <Typography.Body3>Partnership: {rate.partnershipName}</Typography.Body3>
               </Flex.Vertical>
-            ))}
-          </Flex.Vertical>
+              <Button.Medium onClick={() => handleClickBook(rate)}>Choose this rate</Button.Medium>
+            </Flex.Horizontal>
+          ))}
         </Flex.Vertical>
       </Flex.Vertical>
     </StyledRoomInfoItem>

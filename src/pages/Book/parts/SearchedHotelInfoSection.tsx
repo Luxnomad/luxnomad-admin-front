@@ -46,7 +46,7 @@ function SearchedHotelInfoSection() {
           <HotelImageSlider images={data.hotelImages} />
         </div>
       </Flex.Horizontal>
-      <Flex.Vertical className='tw-mt-[12px]' gap={8}>
+      <Flex.Vertical className='tw-mt-[24px]'>
         {sortedRooms.map((room, index) => (
           <RoomInfoItem room={room} key={index} />
         ))}

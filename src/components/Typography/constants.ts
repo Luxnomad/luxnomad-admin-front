@@ -4,6 +4,7 @@ export const TYPOGRAPHY_THEME = {
   HEADLINE_3_24_EB: 'Headline3-24-EB',
   HEADLINE_3_20_EB: 'Headline3-20-EB',
   SUBTITLE_1: 'Subtitle1',
+  SUBTITLE_2: 'Subtitle2',
   BODY_1: 'Body1',
   BODY_2: 'Body2',
   BODY_3: 'Body3',
