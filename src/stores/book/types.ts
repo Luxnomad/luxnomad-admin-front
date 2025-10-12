@@ -42,6 +42,7 @@ export interface RateInfo {
   currency: string;
   rateDescription: string;
   rateKey: string;
+  partnershipName: string;
 }
 
 export interface HotelRulesResponse {

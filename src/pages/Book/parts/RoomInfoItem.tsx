@@ -49,9 +49,12 @@ function RoomInfoItem({ room }: { room: Room }) {
           <Flex.Vertical gap={8}>
             {room.rates.map((rate, index) => (
               <Flex.Horizontal key={rate.rateKey} alignItems='center' gap={16}>
-                <Typography.Body3 key={rate.rateKey}>
-                  [Rate {index + 1}] - {rate.price.toLocaleString()} {rate.currency}
-                </Typography.Body3>
+                <Flex.Vertical gap={4}>
+                  <Typography.Body3 key={rate.rateKey}>
+                    [Rate {index + 1}]: {rate.price.toLocaleString()} {rate.currency}
+                  </Typography.Body3>
+                  <Typography.Caption1>Partnership: {rate.partnershipName}</Typography.Caption1>
+                </Flex.Vertical>
                 <Button size='small' onClick={() => handleClickBook(rate)}>
                   Choose this rate
                 </Button>
