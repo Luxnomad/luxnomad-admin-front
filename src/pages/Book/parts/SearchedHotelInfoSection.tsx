@@ -15,6 +15,18 @@ function SearchedHotelInfoSection() {
     return null;
   }
 
+  const rooms = [...data.rooms];
+
+  const sortedRooms = rooms
+    .map((room) => {
+      const rates = [...room.rates];
+      return {
+        ...room,
+        rates: rates.sort((a, b) => a.price - b.price),
+      };
+    })
+    .sort((a, b) => a.rates[0].price - b.rates[0].price);
+
   return (
     <Flex.Vertical className='tw-mt-[30px]'>
       <Flex.Horizontal gap={12}>
@@ -35,7 +47,7 @@ function SearchedHotelInfoSection() {
         </div>
       </Flex.Horizontal>
       <Flex.Vertical className='tw-mt-[12px]' gap={8}>
-        {data.rooms.map((room, index) => (
+        {sortedRooms.map((room, index) => (
           <RoomInfoItem room={room} key={index} />
         ))}
       </Flex.Vertical>
