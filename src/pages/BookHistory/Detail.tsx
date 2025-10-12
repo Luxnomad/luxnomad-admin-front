@@ -1,9 +1,9 @@
 import { Formik } from 'formik';
-import { useParams } from 'react-router-dom';
 
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
 import { memoSchema } from '@@constants/schema';
+import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 import BookHistoryDetailCustomerInfoSection from './parts/BookHistoryDetailCustomerInfoSection';
 import BookHistoryDetailHeaderContent from './parts/BookHistoryDetailHeaderContent';
@@ -13,12 +13,16 @@ import BookHistoryDetailPaymentInfoSection from './parts/BookHistoryDetailPaymen
 import { BookHistoryMemoForm } from './types';
 
 function BookHistoryDetail() {
-  const { id } = useParams();
+  const { data } = useRetrieveDetail();
 
   const handleSubmitMemo = () => {};
 
+  if (!data) {
+    return null;
+  }
+
   const initialValues: BookHistoryMemoForm = {
-    reservationId: id ?? '',
+    reservationId: data.reservationId ?? '',
     memo: '',
   };
 
@@ -28,9 +32,11 @@ function BookHistoryDetail() {
         <BookHistoryDetailHotelInfoSection />
         <BookHistoryDetailPaymentInfoSection />
         <BookHistoryDetailCustomerInfoSection />
-        <Formik initialValues={initialValues} onSubmit={handleSubmitMemo} validationSchema={memoSchema}>
-          <BookHistoryDetailMemoFormContent />
-        </Formik>
+        {data.status !== 'CANCELLED' && (
+          <Formik initialValues={initialValues} onSubmit={handleSubmitMemo} validationSchema={memoSchema}>
+            <BookHistoryDetailMemoFormContent />
+          </Formik>
+        )}
       </Flex.Vertical>
     </PageTemplate>
   );

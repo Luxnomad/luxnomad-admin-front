@@ -40,15 +40,15 @@ function BookHistoryListFilter() {
             options={[
               {
                 label: 'Booked',
-                value: 'booked',
+                value: 'BOOKED',
               },
               {
                 label: 'Staying',
-                value: 'staying',
+                value: 'STAYING',
               },
               {
                 label: 'Cancelled',
-                value: 'cancelled',
+                value: 'CANCELLED',
               },
             ]}
             onChange={(e) => updateSearchData({ status: e.target.value })}

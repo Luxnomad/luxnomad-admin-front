@@ -8,6 +8,8 @@ function BookHistoryDetailHotelInfoSection() {
     return null;
   }
 
+  console.log(data);
+
   return (
     <Detail
       title='Book Info'

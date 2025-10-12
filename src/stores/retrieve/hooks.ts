@@ -24,12 +24,12 @@ export const useRetrieveDetail = (reservationId?: string) => {
 
   const code = reservationId ?? id;
 
-  const { data, mutate } = useSWRDetail<RetrieveResponse>(`/admin/hotel/retrieve/detail/${code}`, {
+  const { data, mutate } = useSWRDetail<RetrieveResponse>(`/admin/hotel/reservation/${code}`, {
     skip: !code,
   });
 
   return {
-    data: data?.data,
+    data: data?.data.body,
     mutate,
   };
 };
