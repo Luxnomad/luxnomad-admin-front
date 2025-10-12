@@ -6,7 +6,7 @@ import { LuxnomadResponse } from '@@utils/request/types';
 
 function* cancelRetrieve({ payload }: ReturnType<typeof cancelRetrieveRequest>) {
   try {
-    const response: LuxnomadResponse<null> = yield authenticatedRequest.post('/admin/hotel/cancel', {
+    const response: LuxnomadResponse<null> = yield authenticatedRequest.put('/admin/hotel/cancel', {
       data: payload,
     });
 

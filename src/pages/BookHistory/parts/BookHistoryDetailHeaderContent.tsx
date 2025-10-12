@@ -5,6 +5,7 @@ import Button from '@@components/Button';
 import Flex from '@@components/Flex';
 import { showErrorToast, showSuccessToast } from '@@components/Toast';
 import Typography from '@@components/Typography';
+import { useRequestFlag } from '@@hooks/flag';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 import { cancelRetrieveFailure, cancelRetrieveRequest, cancelRetrieveSuccess } from '@@stores/retrieve/reducer';
@@ -13,6 +14,7 @@ function BookHistoryDetailHeaderContent() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const loading = useRequestFlag(cancelRetrieveRequest.type);
   const { data, mutate } = useRetrieveDetail();
 
   const handleClickCancel = () => {
@@ -45,7 +47,7 @@ function BookHistoryDetailHeaderContent() {
     <Flex.Horizontal className='tw-w-full tw-py-[4px]' justifyContent='space-between' alignItems='center'>
       <Typography.Body3>Book Detail</Typography.Body3>
       {data?.status !== 'CANCELLED' && (
-        <Button.Medium theme='error' onClick={handleClickCancel}>
+        <Button.Medium theme='error' onClick={handleClickCancel} loading={loading}>
           Cancel
         </Button.Medium>
       )}
