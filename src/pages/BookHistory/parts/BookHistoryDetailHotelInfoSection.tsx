@@ -61,6 +61,7 @@ function BookHistoryDetailHotelInfoSection() {
         {
           name: 'guestCount',
           title: 'Guest Count',
+          size: 6,
         },
         {
           name: 'checkInDate',

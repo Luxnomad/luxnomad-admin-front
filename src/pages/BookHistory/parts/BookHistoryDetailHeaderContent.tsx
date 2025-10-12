@@ -9,7 +9,7 @@ import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 import { cancelRetrieveFailure, cancelRetrieveRequest, cancelRetrieveSuccess } from '@@stores/retrieve/reducer';
 
-function BookHistoryDetailHeaderContent() {
+function BookHistoryDetailHeaderContent({ handleSave }: { handleSave: () => void }) {
   const dispatch = useDispatch();
 
   const loading = useRequestFlag(cancelRetrieveRequest.type);
@@ -44,11 +44,14 @@ function BookHistoryDetailHeaderContent() {
   return (
     <Flex.Horizontal className='tw-w-full tw-py-[4px]' justifyContent='space-between' alignItems='center'>
       <Typography.Body3>Book Detail</Typography.Body3>
-      {data?.status !== 'CANCELLED' && (
-        <Button.Medium theme='error' onClick={handleClickCancel} loading={loading}>
-          Cancel
-        </Button.Medium>
-      )}
+      <Flex.Horizontal gap={12}>
+        <Button.Medium onClick={handleSave}>Save as PDF</Button.Medium>
+        {data?.status !== 'CANCELLED' && (
+          <Button.Medium theme='error' onClick={handleClickCancel} loading={loading}>
+            Cancel
+          </Button.Medium>
+        )}
+      </Flex.Horizontal>
     </Flex.Horizontal>
   );
 }
