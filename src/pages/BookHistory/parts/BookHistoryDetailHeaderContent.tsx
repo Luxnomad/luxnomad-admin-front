@@ -22,7 +22,7 @@ function BookHistoryDetailHeaderContent() {
       dispatch(
         cancelRetrieveRequest({
           confirmationNumber: data?.confirmationNumber,
-          bookingIdentifier: data?.bookingCode,
+          bookingIdentifier: data?.reservationId,
         })
       );
     }
