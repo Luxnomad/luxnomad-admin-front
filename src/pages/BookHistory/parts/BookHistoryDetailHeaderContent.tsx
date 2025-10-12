@@ -1,21 +1,45 @@
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import Button from '@@components/Button';
 import Flex from '@@components/Flex';
-import { showSuccessToast } from '@@components/Toast';
+import { showErrorToast, showSuccessToast } from '@@components/Toast';
 import Typography from '@@components/Typography';
+import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { useRetrieveDetail } from '@@stores/retrieve/hooks';
+import { cancelRetrieveFailure, cancelRetrieveRequest, cancelRetrieveSuccess } from '@@stores/retrieve/reducer';
 
 function BookHistoryDetailHeaderContent() {
+  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { data } = useRetrieveDetail();
+  const { data, mutate } = useRetrieveDetail();
 
   const handleClickCancel = () => {
-    if (window.confirm(`Are you sure cancel ${id} Book?`)) {
-      showSuccessToast('Cancel Successfully');
+    if (data && window.confirm(`Are you sure cancel ${id} Book?`)) {
+      dispatch(
+        cancelRetrieveRequest({
+          confirmationNumber: data?.confirmationNumber,
+          bookingIdentifier: data?.bookingCode,
+        })
+      );
     }
   };
+
+  useActionSubscribe({
+    type: cancelRetrieveSuccess.type,
+    callback: () => {
+      showSuccessToast('Cancel Successfully');
+      mutate();
+    },
+  });
+
+  useActionSubscribe({
+    type: cancelRetrieveFailure.type,
+    callback: ({ payload }: ReturnType<typeof cancelRetrieveFailure>) => {
+      showErrorToast(payload);
+    },
+  });
 
   return (
     <Flex.Horizontal className='tw-w-full tw-py-[4px]' justifyContent='space-between' alignItems='center'>

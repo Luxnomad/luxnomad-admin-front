@@ -45,3 +45,8 @@ export interface RetrieveResponse {
   customerCountryCode: string;
   specialInstruction: string;
 }
+
+export interface CancelRequest {
+  bookingIdentifier: string;
+  confirmationNumber: string;
+}
