@@ -46,20 +46,18 @@ function RoomInfoItem({ room }: { room: Room }) {
             <span>Bed Type: {room.bedType}</span>
             <span className='tw-ml-[8px]'>Bed Count: {room.bedQuantity}</span>
           </Typography.Body3>
-          <Flex.Vertical gap={8}>
+          <Flex.Vertical className='tw-mt-[12px]' gap={24}>
             {room.rates.map((rate, index) => (
-              <Flex.Horizontal key={rate.rateKey} alignItems='center' gap={16}>
-                <Flex.Vertical gap={4}>
-                  <Typography.Body3>
-                    [Rate {index + 1}]: {rate.price.toLocaleString()} {rate.currency}
-                  </Typography.Body3>
-                  <Typography.Caption1>RAC: {rate.rateCode}</Typography.Caption1>
-                  <Typography.Caption1>Partnership: {rate.partnershipName}</Typography.Caption1>
-                </Flex.Vertical>
+              <Flex.Vertical gap={2} key={rate.rateKey} alignItems='flex-start'>
+                <Typography.Body3>
+                  [Rate {index + 1}]: {rate.price.toLocaleString()} {rate.currency}
+                </Typography.Body3>
+                <Typography.Caption1>RAC: {rate.rateCode}</Typography.Caption1>
+                <Typography.Caption1>Partnership: {rate.partnershipName}</Typography.Caption1>
                 <Button size='small' onClick={() => handleClickBook(rate)}>
                   Choose this rate
                 </Button>
-              </Flex.Horizontal>
+              </Flex.Vertical>
             ))}
           </Flex.Vertical>
         </Flex.Vertical>
