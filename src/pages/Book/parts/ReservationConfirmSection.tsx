@@ -57,7 +57,7 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
           },
           {
             name: 'cardExpireDate',
-            title: 'Expire Date',
+            title: 'Expiry Date',
             renderContent: (
               <InputMask mask='99/99' placeholder='MM/YY' {...getFieldProps('paymentCardInfo.cardExpireDate')}>
                 {(inputProps) => <TextField {...inputProps} errorMessage={errors.paymentCardInfo?.cardExpireDate} />}
@@ -80,12 +80,18 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
         ]}
       />
       <Detail
-        title='Traveler Info'
+        title='Main Guest Info'
         data={{}}
         options={[
           {
             name: 'name',
-            title: 'Name',
+            title: (
+              <>
+                Name
+                <br />
+                (Must match card holder name)
+              </>
+            ),
             renderContent: (
               <FilterGroup errorMessage={errors.travelerInfo?.travelerFirstName ?? errors.travelerInfo?.travelerLastName}>
                 <Flex.Horizontal gap={8}>

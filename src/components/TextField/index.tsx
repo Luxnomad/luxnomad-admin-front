@@ -56,7 +56,7 @@ function TextField({ label, errorMessage, className, ...inputProps }: TextFieldP
 
   return (
     <StyledTextField className={newErrorMessage} gap={8}>
-      {label && <Typography.Subtitle1 color={COLORS.GRAY_SCALE_50}>{label}</Typography.Subtitle1>}
+      {label && <Typography.Subtitle1>{label}</Typography.Subtitle1>}
       <Flex.Horizontal gap={8}>
         <StyledInput className={newErrorMessage} {...inputProps} />
       </Flex.Horizontal>

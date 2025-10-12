@@ -6,15 +6,15 @@ export const memoSchema = object({
 
 export const reservationSchema = object({
   paymentCardInfo: object({
-    cardExpireDate: string().required('Please enter your card expire date'),
-    cardCode: string().required('Please select your card type'),
-    cardHolderName: string().required('Please enter your card holder name'),
-    cardNumber: string().required('Please enter your card number'),
+    cardExpireDate: string().required('This field is required.'),
+    cardCode: string().required('This field is required.'),
+    cardHolderName: string().required('This field is required.'),
+    cardNumber: string().required('This field is required.'),
   }),
   travelerInfo: object({
-    travelerFirstName: string().required('Please entar traveler name'),
-    travelerLastName: string().required('Please entar traveler name'),
-    travelerPhoneNumber: string().required('Please entar traveler phone number'),
-    travelerCountryAccessCode: string().required('Please entar traveler phone number'),
+    travelerFirstName: string().required('This field is required.'),
+    travelerLastName: string().required('This field is required.'),
+    travelerPhoneNumber: string().required('This field is required.'),
+    travelerCountryAccessCode: string().required('This field is required.'),
   }),
 });

@@ -19,35 +19,51 @@ function ReservationFormContent({ room, rules, rate }: { room: Room; rules: Hote
       <StyledReservationFormContent headerContent={`[${rules.bookingCode}] ${rules.hotelName} - ${room.roomType}`}>
         <Flex.Vertical gap={24}>
           <Detail
-            title='Basic Info'
+            title='Reservation Details'
             data={rules}
             options={[
               {
-                name: 'rac',
-                title: 'RAC',
+                name: 'rateCode',
+                title: 'Rate Code',
                 renderContent: rate.rateCode,
                 size: 6,
               },
               {
                 name: 'partnetship',
-                title: 'Partnership Name',
+                title: 'Program',
                 renderContent: rate.partnershipName,
                 size: 6,
               },
               {
-                name: 'schedules',
-                title: 'Schedules',
-                renderContent: ({ checkInDate, checkInTime, checkOutDate, checkOutTime }) =>
-                  `${checkInDate} ${checkInTime} ~ ${checkOutDate} ${checkOutTime}`,
+                name: 'checkInDate',
+                title: 'Check in',
+                renderContent: ({ checkInDate, checkInTime }) => `${checkInDate} ${checkInTime}`,
+                size: 6,
+              },
+              {
+                name: 'checkOutDate',
+                title: 'Check out',
+                renderContent: ({ checkOutDate, checkOutTime }) => `${checkOutDate} ${checkOutTime}`,
+                size: 6,
               },
               {
                 name: 'price',
-                title: 'Price',
-                renderContent: ({ price, currency }) => `${price.toLocaleString()} ${currency}`,
+                title: (
+                  <>
+                    Total Rate
+                    <br />
+                    (Tax Included)
+                  </>
+                ),
+                renderContent: ({ price, currency }) => (
+                  <Typography.Body2>
+                    {price.toLocaleString()} {currency} <b>(Pay at the hotel)</b>
+                  </Typography.Body2>
+                ),
               },
               {
                 name: 'mealsIncluded',
-                title: 'Meals included',
+                title: 'Breakfast',
                 renderContent: ({ mealsIncluded }) => (
                   <Typography.Body2 color={mealsIncluded ? 'green' : 'red'}>{mealsIncluded ? 'O' : 'X'}</Typography.Body2>
                 ),
@@ -64,7 +80,7 @@ function ReservationFormContent({ room, rules, rate }: { room: Room; rules: Hote
             ]}
           />
           <Flex.Vertical>
-            <Title>Penalties</Title>
+            <Title>Cancellation Policy</Title>
             <Flex.Vertical gap={8}>
               {rules.cancelPenalty.map((penalty, index) => (
                 <Detail

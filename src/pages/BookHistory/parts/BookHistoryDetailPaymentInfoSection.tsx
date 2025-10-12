@@ -21,7 +21,7 @@ function BookHistoryDetailPaymentInfoSection() {
         },
         {
           name: 'cardExpireDate',
-          title: 'Card Expire Date',
+          title: 'Card Expiry Date',
           renderContent: ({ cardExpireDate }) => cardExpireDate.replace(/(\d{2})(\d{2})/g, '$1/$2'),
           size: 6,
         },

@@ -15,7 +15,8 @@ const StyledDetailContent = styled(Flex.Horizontal)`
   border-left: 1px solid ${COLORS.GRAY_SCALE_10};
   border-top: 1px solid ${COLORS.GRAY_SCALE_10};
 
-  ${({ theme }) => theme.typography.Body3}
+  overflow-wrap: break-word;
+  ${({ theme }) => theme.typography.Body3};
 `;
 
 function DetailContent({ children }: PropsWithChildren) {
