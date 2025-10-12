@@ -92,6 +92,7 @@ function ReservationFormContent({ room, rules, rate }: { room: Room; rules: Hote
                       name: 'hotelPenalty',
                       title: 'Hotel Penalty',
                       renderContent: ({ hotelPenalty }) => `${hotelPenalty.percent} ${hotelPenalty.appliesTo}`,
+                      hidden: !penalty.refundable && !penalty.hotelPenalty.appliesTo && !penalty.hotelPenalty.percent,
                     },
                   ]}
                 />
