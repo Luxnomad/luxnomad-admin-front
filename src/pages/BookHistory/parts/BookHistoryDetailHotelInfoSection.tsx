@@ -10,7 +10,7 @@ function BookHistoryDetailHotelInfoSection() {
 
   return (
     <Detail
-      title='Book Info'
+      title='Reservation Confirmation'
       data={data}
       options={[
         {

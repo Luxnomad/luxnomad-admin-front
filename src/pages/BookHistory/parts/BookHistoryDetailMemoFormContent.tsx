@@ -4,6 +4,7 @@ import Button from '@@components/Button';
 import Flex from '@@components/Flex';
 import TextArea from '@@components/TextArea';
 import Title from '@@components/Title';
+import Typography from '@@components/Typography';
 
 import { BookHistoryMemoForm } from '../types';
 
@@ -13,10 +14,13 @@ function BookHistoryDetailMemoFormContent() {
   return (
     <Form onSubmit={handleSubmit}>
       <Flex.Vertical>
-        <Title>Special Request</Title>
+        <Title>
+          Modify Special Request{' '}
+          <Typography.Body3 as='span'>(please contact hotel directly if check-in date is within the next 7 days)</Typography.Body3>
+        </Title>
         <Flex.Vertical gap={8}>
-          <TextArea {...getFieldProps('memo')} placeholder='Please enter the memo content. (English Only)' />
-          <Button.Medium disabled={!isValid}>Modify Memo</Button.Medium>
+          <TextArea {...getFieldProps('memo')} placeholder='Please enter your special request details (ENGLISH ONLY).' />
+          <Button.Medium disabled={!isValid}>Modify Special Request</Button.Medium>
         </Flex.Vertical>
       </Flex.Vertical>
     </Form>

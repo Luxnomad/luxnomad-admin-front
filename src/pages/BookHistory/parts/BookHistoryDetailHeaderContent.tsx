@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import Button from '@@components/Button';
 import Flex from '@@components/Flex';
@@ -12,13 +11,12 @@ import { cancelRetrieveFailure, cancelRetrieveRequest, cancelRetrieveSuccess } f
 
 function BookHistoryDetailHeaderContent() {
   const dispatch = useDispatch();
-  const { id } = useParams();
 
   const loading = useRequestFlag(cancelRetrieveRequest.type);
   const { data, mutate } = useRetrieveDetail();
 
   const handleClickCancel = () => {
-    if (data && window.confirm(`Are you sure cancel ${id} Book?`)) {
+    if (data && window.confirm(`Are you sure you want cancel this booking? (This action cannot be undone)`)) {
       dispatch(
         cancelRetrieveRequest({
           confirmationNumber: data?.confirmationNumber,
