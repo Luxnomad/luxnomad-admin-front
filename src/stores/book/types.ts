@@ -74,6 +74,7 @@ export interface CancelPenalty {
 export interface Deadline {
   start: Date;
   end?: Date;
+  time?: string;
 }
 
 export interface HotelPenalty {
@@ -92,6 +93,7 @@ export interface ReservationRequest {
   travelerInfo: TravelerInfoRequest;
   addressInfo: AddressInfoRequest;
   requestComment?: string;
+  cancelDeadline?: string;
 }
 
 export interface HotelInfoRequest {

@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Form, useFormikContext } from 'formik';
 import styled from 'styled-components';
 
@@ -76,7 +75,7 @@ function ReservationFormContent({ room, rules, rate }: { room: Room; rules: Hote
                       name: 'deadline',
                       title: 'Deadline',
                       renderContent: ({ deadline }) =>
-                        `${format(deadline.start, 'yyyy.MM.dd')} ~ ${deadline.end ? format(deadline.end, 'yyyy.MM.dd') : ''}`,
+                        `${deadline.start} ~ ${deadline.end ? `${deadline.end}${deadline.time ? ` ${deadline.time}` : ''}` : ''}`,
                     },
                     {
                       name: 'description',

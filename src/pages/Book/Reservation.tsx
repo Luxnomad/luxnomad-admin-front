@@ -87,6 +87,8 @@ function Reservation() {
     return 'Loading...';
   }
 
+  const deadline = rules.cancelPenalty.find((v) => !!v.deadline.end)?.deadline;
+
   const initialValues: ReservationRequest = {
     hotelInfo: {
       bookingCode: rules.bookingCode,
@@ -143,6 +145,7 @@ function Reservation() {
       addressPostalCode: 'n/a',
     },
     requestComment: '',
+    cancelDeadline: deadline ? `${deadline.end}T${deadline.time ?? '23:59:59'}` : '',
   };
 
   return (
