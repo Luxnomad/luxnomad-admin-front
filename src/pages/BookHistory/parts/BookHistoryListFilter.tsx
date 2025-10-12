@@ -57,7 +57,7 @@ function BookHistoryListFilter() {
         <Col md={4}>
           <DatePicker
             className='tw-w-full'
-            label='Chackin Date'
+            label='Check in Date'
             value={searchData.checkInDate}
             onChange={(date) => {
               if (isDayjs(date)) {
@@ -71,7 +71,7 @@ function BookHistoryListFilter() {
         <Col md={4}>
           <DatePicker
             className='tw-w-full'
-            label='Chackout Date'
+            label='Check out Date'
             value={searchData.checkoutDate}
             onChange={(date) => {
               if (isDayjs(date)) {

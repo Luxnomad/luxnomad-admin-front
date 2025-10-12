@@ -94,7 +94,7 @@ function SearchHotelFilterSection() {
         <Col md={4}>
           <DatePicker
             className='tw-w-full'
-            label='Chack in Date'
+            label='Check in Date'
             value={query.checkIn}
             minDate={dayjs()}
             maxDate={query.checkOut ? dayjs(query.checkOut).add(-1, 'day') : undefined}
@@ -110,7 +110,7 @@ function SearchHotelFilterSection() {
         <Col md={4}>
           <DatePicker
             className='tw-w-full'
-            label='Chack out Date'
+            label='Check out Date'
             value={query.checkOut}
             minDate={query.checkIn ? dayjs(query.checkIn).add(1, 'day') : undefined}
             onChange={(date) => {

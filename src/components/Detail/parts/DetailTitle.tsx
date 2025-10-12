@@ -23,7 +23,7 @@ const StyledDetailTitle = styled(Flex.Horizontal)`
     display: flex;
 
     .title__content {
-      word-break: break-all;
+      overflow-wrap: break-word;
     }
 
     .required_mark {

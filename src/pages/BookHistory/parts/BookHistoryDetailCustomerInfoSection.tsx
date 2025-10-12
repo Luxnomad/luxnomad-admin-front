@@ -35,7 +35,7 @@ function BookHistoryDetailCustomerInfoSection() {
         },
         {
           name: 'specialInstruction',
-          title: 'Special Instruction',
+          title: 'Special Request',
         },
       ]}
     />

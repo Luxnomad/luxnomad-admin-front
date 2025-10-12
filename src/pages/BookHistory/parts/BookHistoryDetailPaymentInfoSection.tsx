@@ -20,12 +20,6 @@ function BookHistoryDetailPaymentInfoSection() {
           size: 6,
         },
         {
-          name: 'cardExpireDate',
-          title: 'Card Expiry Date',
-          renderContent: ({ cardExpireDate }) => cardExpireDate.replace(/(\d{2})(\d{2})/g, '$1/$2'),
-          size: 6,
-        },
-        {
           name: 'cardType',
           title: 'Card Type',
           renderContent: ({ cardType }) => CREDIT_CARD_STRING[cardType],
@@ -34,12 +28,10 @@ function BookHistoryDetailPaymentInfoSection() {
         {
           name: 'holderName',
           title: 'Holder Name',
-          size: 6,
         },
         {
           name: 'cardNumber',
           title: 'Card Number',
-          size: 12,
         },
       ]}
     />

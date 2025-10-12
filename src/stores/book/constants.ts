@@ -18,4 +18,5 @@ export const CREDIT_CARD_STRING: Record<string, string> = {
   CA: 'Master Card',
   DC: 'Diners Club',
   IK: 'Dankort',
+  UP: 'Union Pay',
 };
