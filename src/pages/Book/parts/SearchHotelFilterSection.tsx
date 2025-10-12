@@ -11,6 +11,7 @@ import DatePicker from '@@components/DatePicker';
 import Flex from '@@components/Flex';
 import Suggestion from '@@components/Suggestion';
 import { showErrorToast } from '@@components/Toast';
+import { useRequestFlag } from '@@hooks/flag';
 import { useAppState } from '@@store/hooks';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { checkInitialSearch, searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
@@ -34,6 +35,9 @@ function SearchHotelFilterSection() {
     initialSearch: ({ adultCount }) => !adultCount,
   });
 
+  const loading = useRequestFlag(searchRoomRequest.type);
+  const availableSearch = query.chainCode && query.propertyCode && query.checkIn && query.checkOut;
+
   const defaultHotelInfo =
     hotelSearchInfo && hotelSearchInfo.chainCode === query.chainCode && hotelSearchInfo.propertyCode === query.propertyCode
       ? hotelSearchInfo
@@ -44,7 +48,7 @@ function SearchHotelFilterSection() {
   };
 
   const handleSubmit = () => {
-    if (query.chainCode && query.propertyCode && query.checkIn && query.checkOut) {
+    if (availableSearch) {
       dispatch(searchRoomRequest(query as RoomSearchRequest));
     }
   };
@@ -140,7 +144,9 @@ function SearchHotelFilterSection() {
         </Col>
       </Row>
       <Flex.Horizontal justifyContent='center'>
-        <Button onClick={handleSubmit}>Search</Button>
+        <Button.Medium onClick={handleSubmit} loading={loading} disabled={!availableSearch}>
+          Search
+        </Button.Medium>
       </Flex.Horizontal>
     </Flex.Vertical>
   );

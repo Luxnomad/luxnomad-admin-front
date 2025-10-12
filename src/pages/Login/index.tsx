@@ -55,7 +55,7 @@ function Login() {
             <Flex.Vertical gap={20}>
               <TextField placeholder='아이디를 입력하세요' {...getFieldProps('id')} />
               <TextField placeholder='비밀번호를 입력하세요' type='password' {...getFieldProps('password')} />
-              <Button type='submit'>로그인</Button>
+              <Button.Medium type='submit'>로그인</Button.Medium>
             </Flex.Vertical>
           </Form>
         )}

@@ -37,9 +37,7 @@ function Header({ ...props }: HeaderProps) {
     <StyledHeader {...props} alignItems='center' justifyContent='space-between'>
       <MenuIcon className='header__menu_button' onClick={handleToggleMenu} />
       <Flex.Horizontal gap={10}>
-        <Button onClick={handleClickLogout} size='small'>
-          Logout
-        </Button>
+        <Button.Medium onClick={handleClickLogout}>Logout</Button.Medium>
       </Flex.Horizontal>
     </StyledHeader>
   );

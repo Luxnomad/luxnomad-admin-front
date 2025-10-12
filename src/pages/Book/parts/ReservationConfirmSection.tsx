@@ -121,9 +121,9 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
         ]}
       />
       <TextField label='Request Comment' {...getFieldProps('requestComment')} placeholder='Please enter your request. (English Only)' />
-      <Button style={{ marginTop: 30 }} type='submit' disabled={!isValid}>
+      <Button.Medium style={{ marginTop: 30 }} type='submit' disabled={!isValid}>
         Reservation
-      </Button>
+      </Button.Medium>
     </>
   );
 }

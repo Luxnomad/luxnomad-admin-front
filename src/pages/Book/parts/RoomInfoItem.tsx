@@ -54,9 +54,7 @@ function RoomInfoItem({ room }: { room: Room }) {
                 </Typography.Body3>
                 <Typography.Caption1>RAC: {rate.rateCode}</Typography.Caption1>
                 <Typography.Caption1>Partnership: {rate.partnershipName}</Typography.Caption1>
-                <Button size='small' onClick={() => handleClickBook(rate)}>
-                  Choose this rate
-                </Button>
+                <Button.Medium onClick={() => handleClickBook(rate)}>Choose this rate</Button.Medium>
               </Flex.Vertical>
             ))}
           </Flex.Vertical>

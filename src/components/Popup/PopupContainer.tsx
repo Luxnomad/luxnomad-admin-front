@@ -81,14 +81,14 @@ function PopupProvider({ children }: { children: React.ReactNode }) {
             <Typography.Subtitle1 className='popup_box__content'>{popupState.content}</Typography.Subtitle1>
             <Flex.Horizontal gap={12}>
               {popupState.options.buttons?.map((button, index) => (
-                <Button key={index} className='popup_box__button' type='button' onClick={handleButtonClick(button.onClick)}>
+                <Button.Medium key={index} className='popup_box__button' type='button' onClick={handleButtonClick(button.onClick)}>
                   {button.text}
-                </Button>
+                </Button.Medium>
               ))}
               {popupState.options.onCancel && (
-                <Button className='popup_box__cancel' type='button' onClick={hidePopup}>
+                <Button.Medium className='popup_box__cancel' type='button' onClick={hidePopup}>
                   취소
-                </Button>
+                </Button.Medium>
               )}
             </Flex.Horizontal>
           </Flex.Vertical>

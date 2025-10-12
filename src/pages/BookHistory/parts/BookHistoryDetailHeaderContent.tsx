@@ -45,9 +45,9 @@ function BookHistoryDetailHeaderContent() {
     <Flex.Horizontal className='tw-w-full tw-py-[4px]' justifyContent='space-between' alignItems='center'>
       <Typography.Body3>Book Detail</Typography.Body3>
       {data?.status !== 'CANCELLED' && (
-        <Button size='small' color='error' onClick={handleClickCancel}>
+        <Button.Medium theme='error' onClick={handleClickCancel}>
           Cancel
-        </Button>
+        </Button.Medium>
       )}
     </Flex.Horizontal>
   );

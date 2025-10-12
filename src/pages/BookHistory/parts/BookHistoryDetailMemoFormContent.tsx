@@ -16,7 +16,7 @@ function BookHistoryDetailMemoFormContent() {
         <Title>Memo</Title>
         <Flex.Vertical gap={8}>
           <TextArea {...getFieldProps('memo')} placeholder='Please enter the memo content. (English Only)' />
-          <Button disabled={!isValid}>Modify Memo</Button>
+          <Button.Medium disabled={!isValid}>Modify Memo</Button.Medium>
         </Flex.Vertical>
       </Flex.Vertical>
     </Form>

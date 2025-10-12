@@ -83,9 +83,9 @@ function BookHistoryListFilter() {
           />
         </Col>
       </Row>
-      <Button className='tw-self-center' onClick={handleClickSearch}>
+      <Button.Medium className='tw-self-center' onClick={handleClickSearch}>
         Search
-      </Button>
+      </Button.Medium>
     </Flex.Vertical>
   );
 }
