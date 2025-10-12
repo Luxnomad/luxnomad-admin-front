@@ -1,6 +1,6 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import Slick from 'react-slick';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import { SliderProps } from '@@components/Slider/types';
 const StyledSlider = styled.div<{ $currentIndex: number; $size?: number }>`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   .slider__slick_wrap {
     ${({ $size }) => $size && `width: ${$size}px;`}
   }
@@ -27,7 +27,7 @@ const StyledSlick = styled(Slick)<{ gap: number }>`
   }
 `;
 
-function Slider({ items, gap = 0, itemSize, sliderProps, ...props }: SliderProps) {
+const Slider = forwardRef(({ items, gap = 0, itemSize, sliderProps, ...props }: SliderProps, ref) => {
   const [index, setIndex] = useState<number>(0);
 
   const dots = sliderProps?.dots ?? true;
@@ -36,6 +36,8 @@ function Slider({ items, gap = 0, itemSize, sliderProps, ...props }: SliderProps
     <StyledSlider $currentIndex={index} $size={itemSize} {...props}>
       <div className='slider__slick_wrap'>
         <StyledSlick
+          //@ts-ignore
+          ref={ref}
           gap={gap ?? 0}
           dots={false}
           infinite={false}
@@ -52,6 +54,6 @@ function Slider({ items, gap = 0, itemSize, sliderProps, ...props }: SliderProps
       {dots && <SliderNavigation currentIndex={index} length={items.length} />}
     </StyledSlider>
   );
-}
+});
 
 export default Slider;
