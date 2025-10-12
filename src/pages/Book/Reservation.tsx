@@ -102,7 +102,7 @@ function Reservation() {
       totalPrice: rules.price,
       paymentCurrencyCode: rules.currency,
       paymentAmount: rules.price,
-      rateCodeValue: rate.rateKey,
+      rateCodeValue: rate.rateCode,
       rateCodeName: 'V',
       rateCodeId: 'STEPPROGRAM',
     },
@@ -146,7 +146,7 @@ function Reservation() {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={reservationSchema}>
-      <ReservationFormContent room={room} rules={rules} />
+      <ReservationFormContent room={room} rules={rules} rate={rate} />
     </Formik>
   );
 }

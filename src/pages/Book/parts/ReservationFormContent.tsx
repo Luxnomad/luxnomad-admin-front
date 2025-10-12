@@ -8,11 +8,11 @@ import PageTemplate from '@@components/PageTemplate';
 import Title from '@@components/Title';
 import Typography from '@@components/Typography';
 import ReservationConfirmSection from '@@pages/Book/parts/ReservationConfirmSection';
-import { HotelRulesResponse, ReservationRequest, Room } from '@@stores/book/types';
+import { HotelRulesResponse, RateInfo, ReservationRequest, Room } from '@@stores/book/types';
 
 const StyledReservationFormContent = styled(PageTemplate)``;
 
-function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRulesResponse }) {
+function ReservationFormContent({ room, rules, rate }: { room: Room; rules: HotelRulesResponse; rate: RateInfo }) {
   const { handleSubmit } = useFormikContext<ReservationRequest>();
 
   return (
@@ -23,6 +23,18 @@ function ReservationFormContent({ room, rules }: { room: Room; rules: HotelRules
             title='Basic Info'
             data={rules}
             options={[
+              {
+                name: 'rac',
+                title: 'RAC',
+                renderContent: rate.rateCode,
+                size: 6,
+              },
+              {
+                name: 'partnetship',
+                title: 'Partnership Name',
+                renderContent: rate.partnershipName,
+                size: 6,
+              },
               {
                 name: 'schedules',
                 title: 'Schedules',

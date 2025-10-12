@@ -41,6 +41,7 @@ export interface RateInfo {
   price: number;
   currency: string;
   rateDescription: string;
+  rateCode: string;
   rateKey: string;
   partnershipName: string;
 }
