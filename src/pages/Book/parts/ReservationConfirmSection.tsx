@@ -103,14 +103,15 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
                 <PhoneInput
                   defaultCountry='ua'
                   value={phone}
-                  onChange={(phone, { country, inputValue }) => {
+                  onChange={(phone, { country }) => {
+                    const number = phone.replace(`+${country.dialCode}`, '');
                     setPhone(phone);
                     setValues({
                       ...values,
                       travelerInfo: {
                         ...values.travelerInfo,
                         travelerCountryAccessCode: country.dialCode,
-                        travelerPhoneNumber: inputValue,
+                        travelerPhoneNumber: number,
                       },
                     });
                   }}

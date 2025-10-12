@@ -21,6 +21,7 @@ import {
 import { HotelRulesResponse, RateInfo, ReservationRequest, Room, RoomSearchRequest } from '@@stores/book/types';
 
 import ReservationFormContent from './parts/ReservationFormContent';
+import { sanitizeReservationForm } from './utils';
 
 function Reservation() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function Reservation() {
       Adult Count: ${form.hotelInfo.adultGuestCount}
       Child Count: ${form.hotelInfo.childGuestCount}`)
     ) {
-      dispatch(confirmReservationRequest(form));
+      dispatch(confirmReservationRequest(sanitizeReservationForm(form)));
     }
   };
 

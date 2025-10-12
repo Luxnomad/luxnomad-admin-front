@@ -4,6 +4,7 @@ export const sanitizeReservationForm = (form: ReservationRequest): ReservationRe
   ...form,
   paymentCardInfo: {
     ...form.paymentCardInfo,
-    cardExpireDate: form.paymentCardInfo.cardExpireDate.replace(/\//g, ''),
+    cardExpireDate: form.paymentCardInfo.cardExpireDate.replace(/([^\d])/g, ''),
+    cardNumber: form.paymentCardInfo.cardNumber.replace(/([^\d])/g, ''),
   },
 });
