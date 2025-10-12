@@ -35,7 +35,7 @@ export interface RetrieveResponse {
   cancellationPolicy: string;
   price: number;
   paymentAmount: number;
-  cardExpireDate: Date;
+  cardExpireDate: string;
   cardType: string;
   holderName: string;
   cardNumber: string;

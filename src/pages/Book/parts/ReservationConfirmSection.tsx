@@ -101,7 +101,8 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
             renderContent: (
               <FilterGroup errorMessage={errors.travelerInfo?.travelerCountryAccessCode ?? errors.travelerInfo?.travelerPhoneNumber}>
                 <PhoneInput
-                  defaultCountry='ua'
+                  defaultCountry='tw'
+                  preferredCountries={['tw', 'kr', 'hk', 'sg', 'cn']}
                   value={phone}
                   onChange={(phone, { country }) => {
                     const number = phone.replace(`+${country.dialCode}`, '');
