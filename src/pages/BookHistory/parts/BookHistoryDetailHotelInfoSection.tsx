@@ -31,8 +31,8 @@ function BookHistoryDetailHotelInfoSection() {
           size: 6,
         },
         {
-          name: 'rateId',
-          title: 'Rate ID',
+          name: 'rateCode',
+          title: 'Rate Code',
           size: 6,
         },
         {

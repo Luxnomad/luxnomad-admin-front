@@ -27,7 +27,7 @@ function DetailRow<Data extends object>({ option, data }: DetailRowProps<Data>) 
 
     return (
       <DetailContent>
-        {(typeof renderContent === 'function' ? renderContent(data) : renderContent) ?? ((data[name as keyof Data] as ReactNode) || '-')}
+        {(typeof renderContent === 'function' ? renderContent(data) : renderContent) ?? (data[name as keyof Data] as ReactNode) ?? '-'}
       </DetailContent>
     );
   };

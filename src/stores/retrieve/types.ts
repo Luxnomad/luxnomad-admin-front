@@ -21,7 +21,7 @@ export interface RetrieveResponse {
   reservationId: string;
   bookingCode: string;
   confirmationNumber: string;
-  rateId: string;
+  rateCode: string;
   hotelName: string;
   hotelAddress: string;
   hotelPhone: string;
