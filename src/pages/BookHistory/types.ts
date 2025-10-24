@@ -1,4 +1,6 @@
 export interface BookHistoryMemoForm {
-  memo: string;
+  source: string;
+  value: string;
+  commentValue: string;
   reservationId: string;
 }

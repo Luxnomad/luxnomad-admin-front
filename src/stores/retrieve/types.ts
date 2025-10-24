@@ -67,3 +67,12 @@ export interface CancelRequest {
   bookingIdentifier: string;
   confirmationNumber: string;
 }
+
+export interface ModifyRequest {
+  // LL 고정
+  source: string;
+  // Confirmation Code
+  value: string;
+  // Request Memo
+  commentValue: string;
+}

@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 
 export const memoSchema = object({
-  memo: string().required('Memo content is required field.'),
+  commentValue: string().required('Request content is required field.'),
 });
 
 export const reservationSchema = object({

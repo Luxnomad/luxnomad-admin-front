@@ -3,11 +3,15 @@ import { useRef } from 'react';
 import { format } from 'date-fns';
 import { Formik } from 'formik';
 import html2pdf from 'html2pdf.js';
+import { useDispatch } from 'react-redux';
 
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
+import { showErrorToast, showSuccessToast } from '@@components/Toast';
 import { memoSchema } from '@@constants/schema';
+import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { useRetrieveDetail } from '@@stores/retrieve/hooks';
+import { modifyRetrieveFailure, modifyRetrieveRequest, modifyRetrieveSuccess } from '@@stores/retrieve/reducer';
 
 import BookHistoryDetailCustomerInfoSection from './parts/BookHistoryDetailCustomerInfoSection';
 import BookHistoryDetailHeaderContent from './parts/BookHistoryDetailHeaderContent';
@@ -17,10 +21,24 @@ import BookHistoryDetailPaymentInfoSection from './parts/BookHistoryDetailPaymen
 import { BookHistoryMemoForm } from './types';
 
 function BookHistoryDetail() {
-  const { data } = useRetrieveDetail();
+  const dispatch = useDispatch();
+  const { data, mutate } = useRetrieveDetail();
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleSubmitMemo = () => {};
+  const handleSubmitMemo = (form: BookHistoryMemoForm) => {
+    if (window.confirm('Are you sure you want change this request?')) {
+      dispatch(
+        modifyRetrieveRequest({
+          request: {
+            value: form.value,
+            commentValue: form.commentValue,
+            source: form.source,
+          },
+          reservationId: form.reservationId,
+        })
+      );
+    }
+  };
 
   const handleExportClick = async () => {
     const contentElement = ref.current;
@@ -43,13 +61,30 @@ function BookHistoryDetail() {
     }
   };
 
+  useActionSubscribe({
+    type: modifyRetrieveSuccess.type,
+    callback: () => {
+      showSuccessToast('Change request successfully!');
+      mutate();
+    },
+  });
+
+  useActionSubscribe({
+    type: modifyRetrieveFailure.type,
+    callback: ({ payload }: ReturnType<typeof modifyRetrieveFailure>) => {
+      showErrorToast(payload);
+    },
+  });
+
   if (!data) {
     return null;
   }
 
   const initialValues: BookHistoryMemoForm = {
     reservationId: data.reservationId ?? '',
-    memo: '',
+    commentValue: '',
+    value: data.confirmationNumber,
+    source: 'LL',
   };
 
   return (

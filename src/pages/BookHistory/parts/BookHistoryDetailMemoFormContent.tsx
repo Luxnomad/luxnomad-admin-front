@@ -5,10 +5,13 @@ import Flex from '@@components/Flex';
 import TextArea from '@@components/TextArea';
 import Title from '@@components/Title';
 import Typography from '@@components/Typography';
+import { useRequestFlag } from '@@hooks/flag';
+import { modifyRetrieveRequest } from '@@stores/retrieve/reducer';
 
 import { BookHistoryMemoForm } from '../types';
 
 function BookHistoryDetailMemoFormContent() {
+  const loading = useRequestFlag(modifyRetrieveRequest.type);
   const { getFieldProps, isValid, handleSubmit } = useFormikContext<BookHistoryMemoForm>();
 
   return (
@@ -19,8 +22,10 @@ function BookHistoryDetailMemoFormContent() {
           <Typography.Body3 as='span'>(please contact hotel directly if check-in date is within the next 7 days)</Typography.Body3>
         </Title>
         <Flex.Vertical gap={8}>
-          <TextArea {...getFieldProps('memo')} placeholder='Please enter your special request details (ENGLISH ONLY).' />
-          <Button.Medium disabled={!isValid}>Modify Special Request</Button.Medium>
+          <TextArea {...getFieldProps('commentValue')} placeholder='Please enter your special request details (ENGLISH ONLY).' />
+          <Button.Medium disabled={!isValid} type='submit' loading={loading}>
+            Modify Special Request
+          </Button.Medium>
         </Flex.Vertical>
       </Flex.Vertical>
     </Form>
