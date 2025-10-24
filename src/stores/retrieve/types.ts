@@ -25,7 +25,7 @@ export interface RetrieveResponse {
   hotelName: string;
   hotelAddress: string;
   hotelPhone: string;
-  roomType: string;
+  roomType: RoomTypeResponse;
   bookedDate: Date;
   checkInDate: Date;
   checkOutDate: Date;
@@ -34,6 +34,7 @@ export interface RetrieveResponse {
   cancelDeadline: Date;
   cancellationPolicy: string;
   price: number;
+  currency: string;
   paymentAmount: number;
   cardExpireDate: string;
   cardType: string;
@@ -44,6 +45,22 @@ export interface RetrieveResponse {
   customerEmail: string;
   customerCountryCode: string;
   specialInstruction: string;
+}
+
+export interface RoomTypeResponse {
+  wifiIncluded: boolean;
+  bedConfigurationResponse: BedConfigurationResponse;
+  roomDescriptionResponse: RoomDescriptionResponse;
+}
+
+export interface BedConfigurationResponse {
+  quantity: number;
+  bedType: string;
+  size: string;
+}
+
+export interface RoomDescriptionResponse {
+  value?: string;
 }
 
 export interface CancelRequest {

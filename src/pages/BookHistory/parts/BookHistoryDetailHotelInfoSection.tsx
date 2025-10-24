@@ -1,4 +1,5 @@
 import Detail from '@@components/Detail';
+import Typography from '@@components/Typography';
 import { useRetrieveDetail } from '@@stores/retrieve/hooks';
 
 function BookHistoryDetailHotelInfoSection() {
@@ -49,9 +50,26 @@ function BookHistoryDetailHotelInfoSection() {
           size: 6,
         },
         {
-          name: 'roomType',
-          title: 'Room Type',
+          name: 'wifiIncluded',
+          title: 'Free Wifi',
+          renderContent: ({ roomType: { wifiIncluded } }) => (
+            <Typography.Body2 color={wifiIncluded ? 'green' : 'red'}>{wifiIncluded ? 'O' : 'X'}</Typography.Body2>
+          ),
           size: 6,
+        },
+        {
+          name: 'bedConfigurationResponse',
+          title: 'Bed Info',
+          renderContent: ({ roomType: { bedConfigurationResponse } }) =>
+            `${bedConfigurationResponse.bedType} (${bedConfigurationResponse.size}) * ${bedConfigurationResponse.quantity}`,
+          size: data.roomType.roomDescriptionResponse.value ? 6 : 12,
+        },
+        {
+          name: 'roomDescriptionResponse',
+          title: 'Room Description',
+          renderContent: ({ roomType: { roomDescriptionResponse } }) => roomDescriptionResponse.value,
+          size: 6,
+          hidden: !!data.roomType.roomDescriptionResponse.value,
         },
         {
           name: 'bookedDate',
@@ -91,6 +109,7 @@ function BookHistoryDetailHotelInfoSection() {
         {
           name: 'price',
           title: 'Price',
+          renderContent: ({ price, currency }) => `${price.toLocaleString()} ${currency}`,
           size: 6,
         },
       ]}
