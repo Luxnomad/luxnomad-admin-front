@@ -20,7 +20,7 @@ export interface LoginDTO {
 }
 
 export interface LoginResponse {
-  token: string;
+  access_token: string;
 }
 
 export type AdminMemberType = asType<typeof ADMIN_MEMBER_TYPE>;

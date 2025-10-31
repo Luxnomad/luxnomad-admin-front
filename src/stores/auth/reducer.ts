@@ -28,11 +28,11 @@ const authSlice = createSlice({
   name: PREFIX,
   initialState,
   reducers: {
-    loginSuccess(state, { payload: { token } }: PayloadAction<LoginResponse>) {
-      state.token = token;
+    loginSuccess(state, { payload: { access_token } }: PayloadAction<LoginResponse>) {
+      state.token = access_token;
     },
-    setTokens(state, { payload: { token } }: PayloadAction<LoginResponse>) {
-      state.token = token;
+    setTokens(state, { payload: { access_token } }: PayloadAction<LoginResponse>) {
+      state.token = access_token;
     },
     logoutRequest(state) {
       state.token = undefined;

@@ -1,4 +1,3 @@
-import { TextField } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,7 +5,9 @@ import styled from 'styled-components';
 
 import Button from '@@components/Button';
 import Flex from '@@components/Flex';
+import TextField from '@@components/TextField';
 import { showSuccessToast, showErrorToast } from '@@components/Toast';
+import Typography from '@@components/Typography';
 import { LOGIN_MESSAGES } from '@@constants/messages';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
 import { loginRequest, loginSuccess, loginFailure } from '@@stores/auth/reducer';
@@ -17,9 +18,6 @@ const StyledLogin = styled.div`
     margin: 0 auto;
     margin-top: 300px;
     width: 500px;
-
-    border: 1px solid #aaa;
-    border-radius: 30px;
   }
 `;
 
@@ -53,9 +51,10 @@ function Login() {
         {({ getFieldProps, handleSubmit }) => (
           <Form className='login__form' onSubmit={handleSubmit}>
             <Flex.Vertical gap={20}>
-              <TextField placeholder='아이디를 입력하세요' {...getFieldProps('id')} />
-              <TextField placeholder='비밀번호를 입력하세요' type='password' {...getFieldProps('password')} />
-              <Button.Medium type='submit'>로그인</Button.Medium>
+              <Typography.Headline2 className='tw-text-center'>Admin Sign in</Typography.Headline2>
+              <TextField placeholder='Please enter id' {...getFieldProps('id')} />
+              <TextField placeholder='Please enter password' type='password' {...getFieldProps('password')} />
+              <Button.Medium type='submit'>Sign In</Button.Medium>
             </Flex.Vertical>
           </Form>
         )}

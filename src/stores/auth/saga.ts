@@ -1,42 +1,34 @@
-import { takeLatest } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
+import { put, takeLatest } from 'redux-saga/effects';
 
-import { loginRequest, fetchMeRequest } from '@@stores/auth/reducer';
+import { loginRequest, loginSuccess, loginFailure } from '@@stores/auth/reducer';
+import { saveToken } from '@@utils/localStorage';
+import { authenticatedRequest } from '@@utils/request';
 
-// function* login({ payload }: ReturnType<typeof loginRequest>) {
-function* login() {
-  // try {
-  //   const response: LuxnomadResponse<LoginResponse> = yield authenticatedRequest.post('/login', {
-  //     data: payload,
-  //     headers: {
-  //       'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //   });
-  //   if (response.ok) {
-  //     yield put(loginSuccess(response.data));
-  //     saveToken(response.data.token);
-  //   } else {
-  //     yield put(loginFailure('유저 정보가 맞지 않습니다.'));
-  //   }
-  // } catch (e) {
-  //   yield put(loginFailure((e as Error).message));
-  // }
+import { LoginResponse } from './types';
+
+export interface LuxnomadLoginResponse<Data> extends Omit<AxiosResponse<Data>, 'data'> {
+  data: Data;
+  ok: boolean;
 }
 
-function* fetchMe() {
-  // try {
-  //   const response: LuxnomadResponse<AdminDetailResponse> = yield authenticatedRequest.get('/api/admin/detail/mine');
-  //   if (response.ok) {
-  //     yield put(fetchMeSuccess(response.data));
-  //     saveMemberData(response.data);
-  //   } else {
-  //     yield put(fetchMeFailure('사용자 정보를 불러오는데 실패했습니다.'));
-  //   }
-  // } catch (e) {
-  //   yield put(fetchMeFailure((e as Error).message));
-  // }
+function* login({ payload }: ReturnType<typeof loginRequest>) {
+  try {
+    const response: LuxnomadLoginResponse<LoginResponse> = yield authenticatedRequest.post('/admin/login', {
+      data: payload,
+    });
+    if (response.ok) {
+      console.log(response);
+      yield put(loginSuccess(response.data));
+      saveToken(response.data.access_token);
+    } else {
+      yield put(loginFailure('Login Failed.'));
+    }
+  } catch (e) {
+    yield put(loginFailure((e as Error).message));
+  }
 }
 
 export default function* defaultSaga() {
   yield takeLatest(loginRequest.type, login);
-  yield takeLatest(fetchMeRequest.type, fetchMe);
 }
