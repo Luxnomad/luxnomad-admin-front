@@ -61,7 +61,8 @@ function* confirmReservation({ payload }: ReturnType<typeof confirmReservationRe
     if (response.ok) {
       yield put(confirmReservationSuccess());
     } else {
-      yield put(confirmReservationFailure('Failed to reservation'));
+      //@ts-ignore
+      yield put(confirmReservationFailure(response as AxiosError).response?.data.message ?? 'Failed to reservation');
     }
   } catch (e) {
     yield put(confirmReservationFailure((e as Error).message));
