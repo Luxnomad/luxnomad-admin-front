@@ -3,7 +3,7 @@ import qs from 'qs';
 import { put, takeLatest } from 'redux-saga/effects';
 
 import { authenticatedRequest } from '@@utils/request';
-import { LuxnomadResponse } from '@@utils/request/types';
+import { LuxnomadData, LuxnomadResponse } from '@@utils/request/types';
 
 import {
   fetchHotelRulesFailure,
@@ -18,14 +18,19 @@ import {
 } from './reducer';
 import { HotelRulesResponse, RoomSearchResponse } from './types';
 
+interface SearchLuxnomadResponse extends Omit<LuxnomadResponse<RoomSearchResponse>, 'data'> {
+  data: LuxnomadData<RoomSearchResponse> & { rawResponse: object };
+}
+
 function* searchRoom({ payload }: ReturnType<typeof searchRoomRequest>) {
   try {
     const query = qs.stringify(payload);
-    const response: LuxnomadResponse<RoomSearchResponse> = yield authenticatedRequest.get(`/admin/hotel/search?${query}`);
+    const response: SearchLuxnomadResponse = yield authenticatedRequest.get(`/admin/hotel/search?${query}`);
 
     if (response.ok) {
-      yield put(searchRoomSuccess(response.data.body));
+      yield put(searchRoomSuccess({ ...response.data.body, rawResponse: response.data.rawResponse }));
     } else {
+      // eslint-disable-next-line
       // @ts-ignore
       yield put(searchRoomFailure((response as AxiosError).response?.data.message));
     }

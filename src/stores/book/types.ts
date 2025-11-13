@@ -26,6 +26,7 @@ export interface RoomSearchResponse {
   hotelImages: string[];
   address: string;
   rooms: Room[];
+  rawResponse: object;
 }
 
 export interface Room {
