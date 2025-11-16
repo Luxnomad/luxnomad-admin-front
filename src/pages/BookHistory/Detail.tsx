@@ -95,7 +95,7 @@ function BookHistoryDetail() {
           <BookHistoryDetailPaymentInfoSection />
           <BookHistoryDetailCustomerInfoSection />
         </Flex.Vertical>
-        {data.status !== 'CANCELLED' && (
+        {!data.canceled && (
           <Formik initialValues={initialValues} onSubmit={handleSubmitMemo} validationSchema={memoSchema}>
             <BookHistoryDetailMemoFormContent />
           </Formik>

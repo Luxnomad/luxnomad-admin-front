@@ -32,6 +32,7 @@ export interface RetrieveResponse {
   guestCount: string;
   status: string;
   cancelDeadline: Date;
+  canceled: boolean;
   cancellationPolicy: string;
   price: number;
   currency: string;

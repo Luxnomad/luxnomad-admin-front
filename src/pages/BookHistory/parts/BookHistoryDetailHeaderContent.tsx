@@ -46,7 +46,7 @@ function BookHistoryDetailHeaderContent({ handleSave }: { handleSave: () => void
       <Typography.Body3>Book Detail</Typography.Body3>
       <Flex.Horizontal gap={12}>
         <Button.Medium onClick={handleSave}>Save as PDF</Button.Medium>
-        {data?.status !== 'CANCELLED' && (
+        {!data?.canceled && (
           <Button.Medium theme='error' onClick={handleClickCancel} loading={loading}>
             Cancel
           </Button.Medium>
