@@ -106,12 +106,17 @@ export interface ReservationRequest {
 export interface HotelInfoRequest {
   bookingCode: string;
   roomQuantity: number;
-  childGuestCount: number;
+  children?: Child[];
   adultGuestCount: number;
   hotelPropertyCode: string;
   hotelChainCode: string;
   checkin: string;
   checkout: string;
+}
+
+export interface Child {
+  age: number;
+  count: number;
 }
 
 export interface PriceInfoRequest {

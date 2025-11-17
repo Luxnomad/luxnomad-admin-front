@@ -23,6 +23,25 @@ import { HotelRulesResponse, RateInfo, ReservationRequest, Room, RoomSearchReque
 import ReservationFormContent from './parts/ReservationFormContent';
 import { sanitizeReservationForm } from './utils';
 
+const getChildArray = (ages: number[]) => {
+  const newAges = ages.map((age) => +age);
+
+  const result = Object.entries(
+    newAges.reduce(
+      (acc, age) => {
+        acc[age] = (acc[age] || 0) + 1;
+        return acc;
+      },
+      {} as Record<number, number>
+    )
+  ).map(([age, count]) => ({
+    age: Number(age),
+    count,
+  }));
+
+  return result;
+};
+
 function Reservation() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,6 +50,8 @@ function Reservation() {
   const searchInfo = useLocation().state?.searchInfo as RoomSearchRequest;
   const [rules, setRules] = useState<HotelRulesResponse | null>(null);
 
+  const childrenInfo = getChildArray(searchInfo.childrenAges ?? []);
+
   const handleSubmit = (form: ReservationRequest) => {
     if (
       window.confirm(`Please check your reservation again.
@@ -38,7 +59,7 @@ function Reservation() {
       Check In: ${form.hotelInfo.checkin}
       Check Out: ${form.hotelInfo.checkout}
       Adult Count: ${form.hotelInfo.adultGuestCount}
-      Child Count: ${form.hotelInfo.childGuestCount}`)
+      Child Count: ${childrenInfo.map((child) => `${child.age}Age * ${child.count}`).join(', ')}`)
     ) {
       dispatch(confirmReservationRequest(sanitizeReservationForm(form)));
     }
@@ -94,7 +115,7 @@ function Reservation() {
       bookingCode: rules.bookingCode,
       roomQuantity: 1,
       adultGuestCount: searchInfo.adultCount,
-      childGuestCount: searchInfo.childCount,
+      children: childrenInfo,
       hotelPropertyCode: searchInfo.propertyCode,
       hotelChainCode: searchInfo.chainCode,
       checkin: rules.checkInDate,
