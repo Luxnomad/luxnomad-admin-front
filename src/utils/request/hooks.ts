@@ -56,7 +56,7 @@ export const useQueryParams = <TQuery extends object>(
       searchParams.set(String(key), String(value));
     }
 
-    setSearchParams(qs.stringify(newQuery, { arrayFormat: 'comma' }));
+    setSearchParams(qs.stringify(newQuery, { arrayFormat: 'repeat' }));
   };
 
   const updateAllQueries = (updates: Partial<TQuery>) => {
@@ -70,7 +70,7 @@ export const useQueryParams = <TQuery extends object>(
       }
     });
 
-    setSearchParams(qs.stringify(newQuery, { arrayFormat: 'comma' }));
+    setSearchParams(qs.stringify(newQuery, { arrayFormat: 'repeat' }));
   };
 
   const currentQueryKey = Array.isArray(queryKey) ? [...queryKey, query] : [queryKey, query];

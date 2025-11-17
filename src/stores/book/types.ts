@@ -15,9 +15,9 @@ export interface RoomSearchRequest {
   chainCode: string;
   propertyCode: string;
   adultCount: number;
-  childCount: number;
   checkIn: string;
   checkOut: string;
+  childrenAges?: number[];
 }
 
 export interface RoomSearchResponse {
