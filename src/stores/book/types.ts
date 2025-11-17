@@ -33,9 +33,15 @@ export interface Room {
   roomType: string;
   viewType: string;
   roomImages: string[];
-  bedType: string;
-  bedQuantity: number;
+  bedTypes: BedType[];
   rates: RateInfo[];
+  maxOccupancy?: number;
+}
+
+export interface BedType {
+  bedType: string;
+  quantity: number;
+  size: string;
 }
 
 export interface RateInfo {

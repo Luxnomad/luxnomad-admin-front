@@ -54,9 +54,15 @@ function RoomInfoItem({ room }: { room: Room }) {
         </div>
         <Flex.Vertical className='room__info'>
           <Typography.Subtitle1>{room.roomType}</Typography.Subtitle1>
-          <Typography.Body2>Bed Type: {room.bedType}</Typography.Body2>
-          <Typography.Body2>Bed Quantity: {room.bedQuantity}</Typography.Body2>
-          <Typography.Body2>View Type: {room.viewType}</Typography.Body2>
+          {room.maxOccupancy && <Typography.Body2>Max Occupancy: {room.maxOccupancy}</Typography.Body2>}
+          <Flex.Vertical className='tw-mt-[12px]' gap={4}>
+            {room.bedTypes.map((type) => (
+              <Typography.Body2>
+                - {type.bedType}
+                <span className='tw-text-[14px]'> [{type.size}]</span> X {type.quantity}
+              </Typography.Body2>
+            ))}
+          </Flex.Vertical>
         </Flex.Vertical>
       </Flex.Horizontal>
       <Flex.Vertical className='tw-flex-shrink-0'>
