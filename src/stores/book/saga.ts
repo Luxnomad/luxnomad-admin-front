@@ -24,7 +24,9 @@ interface SearchLuxnomadResponse extends Omit<LuxnomadResponse<RoomSearchRespons
 
 function* searchRoom({ payload }: ReturnType<typeof searchRoomRequest>) {
   try {
-    const query = qs.stringify(payload);
+    const query = qs.stringify(payload, {
+      arrayFormat: 'comma',
+    });
     const response: SearchLuxnomadResponse = yield authenticatedRequest.get(`/admin/hotel/search?${query}`);
 
     if (response.ok) {
@@ -50,7 +52,9 @@ function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>
     if (response.ok) {
       yield put(fetchHotelRulesSuccess(response.data.body));
     } else {
-      yield put(fetchHotelRulesFailure('Failed to fetch room rules.'));
+      // eslint-disable-next-line
+      // @ts-ignore
+      yield put(fetchHotelRulesFailure((response as AxiosError).response?.data.message ?? 'Failed to fetch room rules.'));
     }
   } catch (e) {
     yield put(fetchHotelRulesFailure((e as Error).message));
