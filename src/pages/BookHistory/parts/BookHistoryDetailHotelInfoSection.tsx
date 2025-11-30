@@ -61,6 +61,7 @@ function BookHistoryDetailHotelInfoSection() {
           name: 'bedConfigurationResponse',
           title: 'Bed Info',
           renderContent: ({ roomType: { bedConfigurationResponse } }) =>
+            bedConfigurationResponse &&
             `${bedConfigurationResponse.bedType} (${bedConfigurationResponse.size}) * ${bedConfigurationResponse.quantity}`,
           size: data.roomType.roomDescriptionResponse.value ? 6 : 12,
         },

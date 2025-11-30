@@ -50,7 +50,7 @@ export interface RetrieveResponse {
 
 export interface RoomTypeResponse {
   wifiIncluded: boolean;
-  bedConfigurationResponse: BedConfigurationResponse;
+  bedConfigurationResponse?: BedConfigurationResponse;
   roomDescriptionResponse: RoomDescriptionResponse;
 }
 
