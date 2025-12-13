@@ -51,7 +51,7 @@ const StyledHotelFullApiResponsePopup = styled.div`
     .popup__footer {
       padding: 6px 12px;
       border-top: 1px solid ${COLORS.GRAY_SCALE_10};
-      justify-content: center;
+      justify-content: space-between;
     }
   }
 `;
@@ -65,6 +65,10 @@ function HotelFullApiResponsePopup({ data, onClose }: { data: object; onClose: (
 
   const handleClickViewer = () => {
     setViewer((prev) => !prev);
+  };
+
+  const handleClickGpt = () => {
+    window.open('https://chatgpt.com/g/g-692418db1464819193a8a0b9f9c9d42b-hotel-property-code-and-chain-code-generator');
   };
 
   return (
@@ -84,6 +88,7 @@ function HotelFullApiResponsePopup({ data, onClose }: { data: object; onClose: (
             </Button.Medium>
             <Button.Medium onClick={handleClickViewer}>{viewer ? 'View plain text' : 'View json viewer'}</Button.Medium>
           </ButtonContainer>
+          <Button.Medium onClick={handleClickGpt}>Response Generator GPTs</Button.Medium>
         </Flex.Horizontal>
       </Flex.Vertical>
     </StyledHotelFullApiResponsePopup>
