@@ -68,7 +68,7 @@ function HotelFullApiResponsePopup({ data, onClose }: { data: object; onClose: (
   };
 
   const handleClickGpt = () => {
-    window.open('https://chatgpt.com/g/g-692418db1464819193a8a0b9f9c9d42b-hotel-property-code-and-chain-code-generator');
+    window.open('https://chatgpt.com/g/g-691b20fd14ec8191a221337fecf165e6-json-interpreter-hotel-search');
   };
 
   return (
