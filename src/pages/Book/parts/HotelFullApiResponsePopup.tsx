@@ -59,9 +59,9 @@ const StyledHotelFullApiResponsePopup = styled.div`
 function HotelFullApiResponsePopup({ data, onClose }: { data: object; onClose: () => void }) {
   const [viewer, setViewer] = useState<boolean>(false);
 
-  const handleClickCopy = () => {
-    window.navigator.clipboard.writeText(JSON.stringify(data));
-  };
+  // const handleClickCopy = () => {
+  //   window.navigator.clipboard.writeText(JSON.stringify(data));
+  // };
 
   const handleClickViewer = () => {
     setViewer((prev) => !prev);
@@ -83,9 +83,9 @@ function HotelFullApiResponsePopup({ data, onClose }: { data: object; onClose: (
         <div className='popup__body'>{viewer ? <ReactJson src={data} /> : <Typography.Body3>{JSON.stringify(data)}</Typography.Body3>}</div>
         <Flex.Horizontal className='popup__footer'>
           <ButtonContainer>
-            <Button.Medium onClick={handleClickCopy} theme='outline'>
+            {/* <Button.Medium onClick={handleClickCopy} theme='outline'>
               Copy
-            </Button.Medium>
+            </Button.Medium> */}
             <Button.Medium onClick={handleClickViewer}>{viewer ? 'View plain text' : 'View json viewer'}</Button.Medium>
           </ButtonContainer>
           <Button.Medium onClick={handleClickGpt}>Response Generator GPTs</Button.Medium>
