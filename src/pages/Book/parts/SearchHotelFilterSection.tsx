@@ -17,7 +17,7 @@ import { COLORS } from '@@constants/colors';
 import { useRequestFlag } from '@@hooks/flag';
 import { useAppState } from '@@store/hooks';
 import { useActionSubscribe } from '@@store/middlewares/actionMiddleware';
-import { checkInitialSearch, searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
+import { checkInitialSearch, resetRoomData, searchRoomFailure, searchRoomRequest } from '@@stores/book/reducer';
 import { RoomSearchRequest } from '@@stores/book/types';
 import { clearHotelSearchInfo, getHotelSearchInfo, saveHotelSearchInfo } from '@@utils/localStorage';
 import { useQueryParams } from '@@utils/request/hooks';
@@ -79,6 +79,11 @@ function SearchHotelFilterSection() {
     if (availableSearch) {
       dispatch(searchRoomRequest(query as RoomSearchRequest));
     }
+  };
+
+  const handleClickReset = () => {
+    updateAllQueries(initialQuery);
+    dispatch(resetRoomData());
   };
 
   // const handleClickAddChild = () => {
@@ -200,6 +205,9 @@ function SearchHotelFilterSection() {
           {/* <Button.Medium theme='outline' onClick={handleClickAddChild}>
             Add Child
           </Button.Medium> */}
+          <Button.Medium theme='outline' onClick={handleClickReset}>
+            Reset
+          </Button.Medium>
           <Button.Medium onClick={handleSubmit} loading={loading} disabled={!availableSearch}>
             Search
           </Button.Medium>

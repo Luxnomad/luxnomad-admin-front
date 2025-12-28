@@ -27,12 +27,15 @@ const bookSlice = createSlice({
       state.roomResponse = payload;
       state.initialSearch = true;
     },
+    resetRoomData(state) {
+      state.roomResponse = undefined;
+    },
     checkInitialSearch(state) {
       state.initialSearch = true;
     },
   },
 });
 
-export const { searchRoomSuccess, checkInitialSearch } = bookSlice.actions;
+export const { searchRoomSuccess, checkInitialSearch, resetRoomData } = bookSlice.actions;
 
 export default bookSlice.reducer;

@@ -60,7 +60,7 @@ export const useQueryParams = <TQuery extends object>(
   };
 
   const updateAllQueries = (updates: Partial<TQuery>) => {
-    const newQuery = { ...query };
+    const newQuery = {} as Partial<TQuery>;
 
     Object.entries(updates).forEach(([key, value]) => {
       if (value === '' || value === null || value === undefined) {
