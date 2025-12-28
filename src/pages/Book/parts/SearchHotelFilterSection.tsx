@@ -44,7 +44,7 @@ const StyledAgeContainer = styled(Col)`
 `;
 
 const initialQuery: Partial<RoomSearchRequest> = {
-  adultCount: 1,
+  adultCount: 2,
 };
 
 const hotelSearchInfo = getHotelSearchInfo();
@@ -77,11 +77,11 @@ function SearchHotelFilterSection() {
     }
   };
 
-  const handleClickAddChild = () => {
-    const newChildren = [...childrenAges];
-    newChildren.push(0);
-    updateQuery('childrenAges', newChildren);
-  };
+  // const handleClickAddChild = () => {
+  //   const newChildren = [...childrenAges];
+  //   newChildren.push(0);
+  //   updateQuery('childrenAges', newChildren);
+  // };
 
   const handleClickRemoveChild = (index: number) => {
     const newChildren = [...childrenAges];
@@ -113,7 +113,7 @@ function SearchHotelFilterSection() {
   return (
     <Flex.Vertical gap={12}>
       <Row>
-        <Col md={3}>
+        <Col md={4}>
           <Suggestion
             fullWidth
             fetcher={searchHotel}
@@ -133,7 +133,7 @@ function SearchHotelFilterSection() {
             }}
           />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <DatePicker
             className='tw-w-full'
             label='Check in Date'
@@ -149,7 +149,7 @@ function SearchHotelFilterSection() {
             }}
           />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <DatePicker
             className='tw-w-full'
             label='Check out Date'
@@ -164,7 +164,7 @@ function SearchHotelFilterSection() {
             }}
           />
         </Col>
-        <Col md={3}>
+        {/* <Col md={3}>
           <TextField
             className='tw-w-full'
             label='Adult count'
@@ -172,7 +172,7 @@ function SearchHotelFilterSection() {
             value={query.adultCount}
             onChange={(e) => updateSearchData({ adultCount: isNaN(+e.target.value) ? undefined : +e.target.value })}
           />
-        </Col>
+        </Col> */}
       </Row>
       <Row>
         {childrenAges.map((child, index) => (
@@ -194,9 +194,9 @@ function SearchHotelFilterSection() {
       </Row>
       <Flex.Horizontal justifyContent='center'>
         <Flex.Horizontal gap={8}>
-          <Button.Medium theme='outline' onClick={handleClickAddChild}>
+          {/* <Button.Medium theme='outline' onClick={handleClickAddChild}>
             Add Child
-          </Button.Medium>
+          </Button.Medium> */}
           <Button.Medium onClick={handleSubmit} loading={loading} disabled={!availableSearch}>
             Search
           </Button.Medium>
