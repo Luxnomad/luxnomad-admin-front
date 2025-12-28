@@ -72,6 +72,10 @@ function SearchHotelFilterSection() {
   };
 
   const handleSubmit = () => {
+    if (query.checkIn && query.checkOut && !dayjs(query.checkIn).isBefore(query.checkOut)) {
+      return alert('Invalid Date Range: Your checkout date must be after your check-in date to search for availability.');
+    }
+
     if (availableSearch) {
       dispatch(searchRoomRequest(query as RoomSearchRequest));
     }
@@ -139,7 +143,6 @@ function SearchHotelFilterSection() {
             label='Check in Date'
             value={query.checkIn}
             minDate={dayjs()}
-            maxDate={query.checkOut ? dayjs(query.checkOut).add(-1, 'day') : undefined}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkIn: date.format('YYYY-MM-DD') });
@@ -154,7 +157,7 @@ function SearchHotelFilterSection() {
             className='tw-w-full'
             label='Check out Date'
             value={query.checkOut}
-            minDate={query.checkIn ? dayjs(query.checkIn).add(1, 'day') : undefined}
+            minDate={dayjs()}
             onChange={(date) => {
               if (isDayjs(date)) {
                 updateSearchData({ checkOut: date.format('YYYY-MM-DD') });
