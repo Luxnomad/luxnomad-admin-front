@@ -16,8 +16,16 @@ const StyledLogin = styled.div`
   .login__form {
     padding: 20px 30px;
     margin: 0 auto;
-    margin-top: 300px;
+    margin-top: 200px;
     width: 500px;
+  }
+  .text__wrap {
+    padding: 0 30px;
+    margin: 0 auto;
+    width: 500px;
+    p {
+      line-height: 20px;
+    }
   }
 `;
 
@@ -59,6 +67,18 @@ function Login() {
           </Form>
         )}
       </Formik>
+      <div className='text__wrap'>
+        <Typography.Subtitle2>
+          Default booking for this system is for two adults.
+          <br />
+          <br />
+          Any additional person (including children) beyond the maximum occupation limit, requires separate confirmation from the hotel to ensure
+          compliance with occupancy limits and to account for any extra charges.
+          <br />
+          <br />
+          Please send an email to the hotel for their separate confirmation immediately after obtaining booking reference number.
+        </Typography.Subtitle2>
+      </div>
     </StyledLogin>
   );
 }

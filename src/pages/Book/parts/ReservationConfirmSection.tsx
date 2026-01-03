@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useFormikContext } from 'formik';
 import InputMask from 'react-input-mask';
 import { PhoneInput } from 'react-international-phone';
+import styled from 'styled-components';
 
 import Button from '@@components/Button';
 import Detail from '@@components/Detail';
@@ -10,10 +11,17 @@ import Dropdown from '@@components/Dropdown';
 import FilterGroup from '@@components/FilterGroup';
 import Flex from '@@components/Flex';
 import TextField from '@@components/TextField'; // 사용자 정의 Input
+import Typography from '@@components/Typography';
 import { CREDIT_CARD_STRING } from '@@stores/book/constants';
 import { HotelRulesResponse, ReservationRequest } from '@@stores/book/types';
 
 import 'react-international-phone/style.css';
+
+const StyledTextWrap = styled.div`
+  p {
+    line-height: 20px;
+  }
+`;
 
 function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
   const [phone, setPhone] = useState<string>('');
@@ -129,6 +137,18 @@ function ReservationConfirmSection({ rules }: { rules: HotelRulesResponse }) {
         ]}
       />
       <TextField label='Request Comment' {...getFieldProps('requestComment')} placeholder='Please enter your request. (English Only)' />
+      <StyledTextWrap>
+        <Typography.Subtitle2>
+          Default booking for this system is for two adults.
+          <br />
+          <br />
+          Any additional person (including children) beyond the maximum occupation limit, requires separate confirmation from the hotel to ensure
+          compliance with occupancy limits and to account for any extra charges.
+          <br />
+          <br />
+          Please send an email to the hotel for their separate confirmation immediately after obtaining booking reference number.
+        </Typography.Subtitle2>
+      </StyledTextWrap>
       <Button.Medium style={{ marginTop: 30 }} type='submit' disabled={!isValid}>
         Reservation
       </Button.Medium>
