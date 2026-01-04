@@ -45,9 +45,11 @@ const getChildArray = (ages: number[]) => {
 function Reservation() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const room = useLocation().state?.room as Room;
   const rate = useLocation().state?.rate as RateInfo;
   const searchInfo = useLocation().state?.searchInfo as RoomSearchRequest;
+
   const [rules, setRules] = useState<HotelRulesResponse | null>(null);
 
   const childrenInfo = getChildArray(searchInfo.childrenAges ?? []);

@@ -69,6 +69,7 @@ export interface HotelRulesResponse {
   checkOutTime: string;
   ratePaymentInfo: string;
   benefit: string;
+  rawResponse: object;
 }
 
 export interface CancelPenalty {

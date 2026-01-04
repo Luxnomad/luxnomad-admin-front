@@ -22,6 +22,10 @@ interface SearchLuxnomadResponse extends Omit<LuxnomadResponse<RoomSearchRespons
   data: LuxnomadData<RoomSearchResponse> & { rawResponse: object };
 }
 
+interface SearchRuleLuxnomadResponse extends Omit<LuxnomadResponse<HotelRulesResponse>, 'data'> {
+  data: LuxnomadData<HotelRulesResponse> & { rawResponse: object };
+}
+
 function* searchRoom({ payload }: ReturnType<typeof searchRoomRequest>) {
   try {
     const query = qs.stringify(payload, {
@@ -43,14 +47,14 @@ function* searchRoom({ payload }: ReturnType<typeof searchRoomRequest>) {
 
 function* fetchHotelRules({ payload }: ReturnType<typeof fetchHotelRulesRequest>) {
   try {
-    const response: LuxnomadResponse<HotelRulesResponse> = yield authenticatedRequest.get('/admin/hotel/rule', {
+    const response: SearchRuleLuxnomadResponse = yield authenticatedRequest.get('/admin/hotel/rule', {
       headers: {
         'Offer-Identifier': payload,
       },
     });
 
     if (response.ok) {
-      yield put(fetchHotelRulesSuccess(response.data.body));
+      yield put(fetchHotelRulesSuccess({ ...response.data.body, rawResponse: response.data.rawResponse }));
     } else {
       // eslint-disable-next-line
       // @ts-ignore

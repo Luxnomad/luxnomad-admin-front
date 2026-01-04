@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import { Form, useFormikContext } from 'formik';
 import styled from 'styled-components';
 
+import Button from '@@components/Button';
 import Detail from '@@components/Detail';
 import Flex from '@@components/Flex';
 import PageTemplate from '@@components/PageTemplate';
@@ -9,15 +12,27 @@ import Typography from '@@components/Typography';
 import ReservationConfirmSection from '@@pages/Book/parts/ReservationConfirmSection';
 import { HotelRulesResponse, RateInfo, ReservationRequest, Room } from '@@stores/book/types';
 
+import HotelFullApiResponsePopup from './HotelFullApiResponsePopup';
+
 const StyledReservationFormContent = styled(PageTemplate)``;
 
 function ReservationFormContent({ room, rules, rate }: { room: Room; rules: HotelRulesResponse; rate: RateInfo }) {
+  const [isShow, setIsShow] = useState<boolean>(false);
+
   const { handleSubmit } = useFormikContext<ReservationRequest>();
+
+  const handleClickShowFull = () => {
+    setIsShow(true);
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
+      {isShow && <HotelFullApiResponsePopup data={rules.rawResponse} onClose={() => setIsShow(false)} />}
       <StyledReservationFormContent headerContent={`[${rules.bookingCode}] ${rules.hotelName} - ${room.roomType}`}>
         <Flex.Vertical gap={24}>
+          <Button.Medium className='tw-self-end' onClick={handleClickShowFull}>
+            Show Full Room Search Response
+          </Button.Medium>
           <Detail
             title='Reservation Details'
             data={rules}
