@@ -61,7 +61,7 @@ function SearchHotelFilterSection() {
   const availableSearch = query.chainCode && query.propertyCode && query.checkIn && query.checkOut;
 
   const defaultHotelInfo =
-    hotelSearchInfo && hotelSearchInfo.chainCode === query.chainCode && hotelSearchInfo.propertyCode === query.propertyCode
+    hotelSearchInfo && hotelSearchInfo.chain_code === query.chainCode && hotelSearchInfo.property_code === query.propertyCode
       ? hotelSearchInfo
       : undefined;
 
@@ -130,13 +130,13 @@ function SearchHotelFilterSection() {
             onChange={(value) => {
               if (value) {
                 saveHotelSearchInfo(value);
-                updateSearchData({ propertyCode: value.propertyCode, chainCode: value.chainCode });
+                updateSearchData({ propertyCode: value.property_code, chainCode: value.chain_code });
               } else {
                 clearHotelSearchInfo();
                 updateSearchData({ propertyCode: undefined, chainCode: undefined });
               }
             }}
-            getOptionLabel={({ name, region, country }) => `${region} ${country} - ${name}`}
+            getOptionLabel={({ hotel_name, region, country }) => `${region} ${country} - ${hotel_name}`}
             textFieldProps={{
               placeholder: 'Search By Hotel Name',
             }}

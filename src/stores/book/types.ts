@@ -4,9 +4,9 @@ export interface BookState {
 }
 
 export interface HotelSearchResponse {
-  chainCode: string;
-  propertyCode: string;
-  name: string;
+  chain_code: string;
+  property_code: string;
+  hotel_name: string;
   country: string;
   region: string;
 }
